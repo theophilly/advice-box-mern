@@ -18,6 +18,10 @@ const adviceSchema = new mongoose.Schema({
     max: 100,
     required: true,
   },
+  userId: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 // adviceSchema.virtual("categories").get(function () {
