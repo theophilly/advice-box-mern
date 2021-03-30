@@ -25,9 +25,9 @@ route.post("/signin", signUpValidator, async (req, res) => {
         const token = jwt.sign(
           { id: user._id, role: user.role },
           process.env.JWT_SECRET,
-          { expiresIn: "1h" }
+          { expiresIn: "10h" }
         );
-
+        res.cookie("token", token, { expiresIn: "10h" });
         return res.status(200).json({ token, user });
       } else {
         return res.status(400).json({ message: "incorrect password" });
@@ -38,6 +38,11 @@ route.post("/signin", signUpValidator, async (req, res) => {
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
+});
+
+route.post("/signout", async (req, res) => {
+  res.clearCookie();
+  return res.status(200).json({ message: "You have logout successfully" });
 });
 
 route.post("/signup", signUpValidator, async (req, res) => {
