@@ -1,0 +1,37 @@
+nav {
+  color: lighten($color: #000000, $amount: 20);
+  display: flex;
+  justify-content: space-between;
+  padding: 0px calc((100vw - 1200px) / 2);
+  height: 11vh;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  margin-bottom: 5px;
+
+  .logo {
+    font-weight: 500;
+    font-size: 1.3rem;
+
+    span {
+      color: #556ee6;
+    }
+  }
+
+  .links {
+    font-family: "Roboto", sans-serif;
+    font-size: 0.9rem;
+
+    .navlink {
+      margin-left: 20px;
+
+      i {
+        color: #556ee6;
+      }
+
+      &:hover {
+        color: #556ee6;
+      }
+    }
+  }
+}
