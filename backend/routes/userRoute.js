@@ -67,15 +67,19 @@ route.post("/signup", signUpValidator, async (req, res) => {
 
     newUser.save((error, newuser) => {
       if (newuser) {
-        res.status(200).json({
-          user: newUser,
-        });
+        const token = jwt.sign(
+          { id: newuser._id, role: newuser.role },
+          process.env.JWT_SECRET,
+          { expiresIn: "10h" }
+        );
+        res.cookie("token", token, { expiresIn: "10h" });
+        return res.status(200).json({ token, user: newuser });
       } else {
-        res.status(400).json({ message: error.message });
+        return res.status(400).json({ message: error.message });
       }
     });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    return res.status(400).json({ message: error.message });
   }
 });
 

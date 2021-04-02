@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
 import {
   useDisclosure,
   Button,
@@ -18,11 +19,22 @@ import {
   FormErrorMessage,
   FormHelperText,
   ModalFooter,
+  useToast,
 } from "@chakra-ui/react";
+import { signUp } from "../store/actions/authActions";
 
 export default function SignUp() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [refresh, setRefresh] = useState(false);
   const btnRef = React.useRef();
+  const toast = useToast();
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.authReducer);
+
+  const someMethod = () => {
+    // Force a render with a simulated state change
+    setRefresh(!refresh);
+  };
 
   return (
     <>
@@ -59,11 +71,36 @@ export default function SignUp() {
                     .oneOf([Yup.ref("password"), null], "password must match")
                     .required("Please confirm password 😱"),
                 })}
-                onSubmit={(values, actions) => {
-                  setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
+                onSubmit={async (values, actions) => {
+                  const { userName, password } = values;
+
+                  await dispatch(signUp({ userName, password }));
+
+                  if (
+                    window.store.getState().authReducer.authenticated === true
+                  ) {
+                    toast({
+                      title: "Account created.",
+                      description: "We've created your account for you.",
+                      status: "success",
+                      duration: 9000,
+                      isClosable: true,
+                      position: "top",
+                    });
                     actions.setSubmitting(false);
-                  }, 1000);
+                    onClose();
+                  } else {
+                    console.log(state.error);
+                    toast({
+                      title: "Error",
+                      description: window.store.getState().authReducer.error,
+                      status: "error",
+                      duration: 9000,
+                      isClosable: true,
+                      position: "top",
+                    });
+                    actions.setSubmitting(false);
+                  }
                 }}
               >
                 {(formik) => {

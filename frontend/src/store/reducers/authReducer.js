@@ -4,6 +4,8 @@ const initialState = {
   loading: false,
   user: null,
   error: "",
+  token: "",
+  authenticated: false,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -12,7 +14,13 @@ export default function authReducer(state = initialState, action) {
   } else if (action.type === actionType.ON_LOGIN_ERROR) {
     return { ...state, error: action.payload.error, loading: false };
   } else if (action.type === actionType.ON_LOGIN_SUCCESS) {
-    return { ...state, loading: false, user: action.payload.user };
+    return {
+      ...state,
+      loading: false,
+      user: action.payload.user,
+      token: action.payload.token,
+      authenticated: true,
+    };
   } else {
     return state;
   }
