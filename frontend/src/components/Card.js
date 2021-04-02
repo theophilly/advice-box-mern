@@ -1,16 +1,19 @@
 import * as React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { AddIcon } from "@chakra-ui/icons";
 import {
+  Box,
+  Wrap,
+  Text,
+  Flex,
+  Avatar,
+  Spacer,
   FormControl,
   useDisclosure,
-  Box,
   Input,
+  Button,
   Textarea,
   Select,
-  Button,
-  Text,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -19,12 +22,33 @@ import {
   ModalBody,
   ModalCloseButton,
   FormErrorMessage,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
 } from "@chakra-ui/react";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 
-export default function Board() {
+export const Card = ({ image, username, title, content, name }) => {
+  //Modal
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  //Alert
+  const [isAlertOpen, setIsAlertOpen] = React.useState(false);
   const initialRef = React.useRef();
   const finalRef = React.useRef();
+  const cancelRef = React.useRef();
+
+  //onclose for Alert box
+  const alertAffirmation = () => {
+    setIsAlertOpen(false);
+    onClose();
+  };
+  const alertRejection = () => {
+    setIsAlertOpen(false);
+  };
 
   const selectData = [
     { key: null, value: null },
@@ -34,21 +58,63 @@ export default function Board() {
     { key: "life", value: "life" },
   ];
 
+  const handleDelete = () => {
+    const confirm = window.confirm("Are you sure you want to delete this?");
+    if (confirm) {
+      onClose();
+    }
+  };
+
   return (
-    <div>
+    <Box
+      _hover={{ boxShadow: "md" }}
+      p="20px"
+      ml={{ base: "0px", md: "16px" }}
+      bg="#F7FAFC"
+      boxShadow="sm"
+      borderRadius="md"
+      mb="10px"
+      w={{ base: "100%", md: "360px" }}
+      h="175px"
+      overflow="hidden"
+      className="my-box"
+    >
+      <Flex cursor="pointer" alignItems="center">
+        <Avatar mr="5px" height="25px" width="25px" name={name} src={image} />
+        <Text
+          color={() => {
+            if (username === "Admin") return "green";
+          }}
+          fontWeight="bold"
+          fontSize="sm"
+        >
+          {username}
+        </Text>
+        <Spacer></Spacer>
+        <EditIcon
+          onClick={onOpen}
+          sx={{
+            ".my-box:hover &": {
+              display: "block",
+            },
+          }}
+          d="none"
+          color="#3182CE"
+        ></EditIcon>
+      </Flex>
+
       <Box
-        h="12vh"
-        padding={{ base: "10px", xl: "0px calc((100vw - 1200px) / 2)" }}
+        mt="1"
+        fontSize="sm"
+        fontWeight="semibold"
+        as="h4"
+        lineHeight="tight"
+        noOfLines={1}
       >
-        <Box mt="20px" minW="30%">
-          <Box display="flex">
-            <Button onClick={onOpen} leftIcon={<AddIcon />} colorScheme="blue">
-              Add Advice
-            </Button>
-          </Box>
-        </Box>
+        {title}
       </Box>
 
+      <Box noOfLines={4}>{content}</Box>
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
@@ -57,7 +123,7 @@ export default function Board() {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Drop an Advice</ModalHeader>
+          <ModalHeader>Edit Advice</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <Formik
@@ -80,6 +146,7 @@ export default function Board() {
                   alert(JSON.stringify(values, null, 2));
                   actions.setSubmitting(false);
                 }, 1000);
+                onClose();
               }}
             >
               {(formik) => {
@@ -156,15 +223,19 @@ export default function Board() {
                     </Field>
 
                     <ModalFooter>
+                      <DeleteIcon
+                        color="red"
+                        onClick={() => setIsAlertOpen(true)}
+                      />
+                      <Spacer />
                       <Button
                         type="submit"
                         isLoading={formik.isSubmitting}
                         colorScheme="blue"
                         mr={3}
                       >
-                        Give Advice
+                        Save Changes
                       </Button>
-                      <Button onClick={onClose}>Cancel</Button>
                     </ModalFooter>
                   </Form>
                 );
@@ -173,35 +244,33 @@ export default function Board() {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </div>
-  );
-}
 
-{
-  /* <Box display="flex" justifyContent="flex-end" minW="70%">
-          <Box px="50px" py="30px" bg="#dbf9ea" width="60%">
-            <Text
-              color="#288855"
-              fontWeight="bold"
-              fontFamily="font-family: 'Inter', sans-serif"
-            >
-              A litle About this App
-            </Text>
-            <OrderedList mt="20px">
-              <ListItem>
-                Lorem ipsum dolor sit ametClick on login Use the "Forgot
-                Password"
-              </ListItem>
-              <ListItem>Consectetur adipiscing elitOption Enter</ListItem>
-              <ListItem>
-                Integer moles and follow the instructions to reset your ptie
-                lorem at massa
-              </ListItem>
-              <ListItem>
-                Facilisis in pretium nisword, please login to update your recl
-                aliquet
-              </ListItem>
-            </OrderedList>
-          </Box>
-        </Box> */
-}
+      <AlertDialog
+        isOpen={isAlertOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={setIsAlertOpen}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Delete Advice
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={alertRejection}>
+                Cancel
+              </Button>
+              <Button colorScheme="red" onClick={alertAffirmation} ml={3}>
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+    </Box>
+  );
+};

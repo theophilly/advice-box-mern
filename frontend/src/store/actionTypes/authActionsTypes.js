@@ -1,0 +1,3 @@
+export const LOGIN_BEGIN = "LOGIN_BEGIN";
+export const ON_LOGIN_SUCCESS = "ON_LOGIN_SUCCESS";
+export const ON_LOGIN_ERROR = "ON_LOGIN_ERROR";

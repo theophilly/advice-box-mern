@@ -1,5 +1,6 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import SignUp from "./SignUp";
+import SignIn from "./SignIn";
 
 export default function Header() {
   return (
@@ -9,12 +10,8 @@ export default function Header() {
       </div>
 
       <div className="links">
-        <NavLink className="navlink" to="/">
-          <i className="fas fa-sign-in-alt"></i> Sign In
-        </NavLink>
-        <NavLink className="navlink" to="/">
-          <i className="fas fa-user-plus"></i> Sign Up
-        </NavLink>
+        <SignIn />
+        <SignUp />
       </div>
     </nav>
   );
