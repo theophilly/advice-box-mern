@@ -19,11 +19,13 @@ import {
   FormErrorMessage,
   FormHelperText,
   ModalFooter,
+  useToast,
 } from "@chakra-ui/react";
 import { login } from "../store/actions/authActions";
 
 export default function SignIn() {
   const dispatch = useDispatch();
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
@@ -58,14 +60,33 @@ export default function SignIn() {
                     .min(6, "password must be atleast 6 characters")
                     .required("Password is required"),
                 })}
-                onSubmit={(values, actions) => {
-                  // setTimeout(() => {
-                  //   alert(JSON.stringify(values, null, 2));
-                  //   actions.setSubmitting(false);
-                  // }, 1000);
+                onSubmit={async (values, actions) => {
+                  await dispatch(login(values));
 
-                  dispatch(login(values));
-                  actions.setSubmitting(false);
+                  if (
+                    window.store.getState().authReducer.authenticated === true
+                  ) {
+                    toast({
+                      title: "Login successful.",
+                      description: "You are now logged in.",
+                      status: "success",
+                      duration: 9000,
+                      isClosable: true,
+                      position: "top",
+                    });
+                    actions.setSubmitting(false);
+                    onClose();
+                  } else {
+                    toast({
+                      title: "Error",
+                      description: window.store.getState().authReducer.error,
+                      status: "error",
+                      duration: 9000,
+                      isClosable: true,
+                      position: "top",
+                    });
+                    actions.setSubmitting(false);
+                  }
                 }}
               >
                 {(formik) => {

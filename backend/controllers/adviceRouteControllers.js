@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-import Advice from "../models/adviceModel.js";
-import { validationResult } from "express-validator";
+import Advice from '../models/adviceModel.js';
+import { validationResult } from 'express-validator';
 
 export const getAllAdvice = async (req, res) => {
   try {
@@ -10,7 +10,7 @@ export const getAllAdvice = async (req, res) => {
     if (allAdvices) {
       return res.status(200).json(allAdvices);
     } else {
-      return res.status(400).json({ message: "something went wrong" });
+      return res.status(400).json({ message: 'something went wrong' });
     }
   } catch (error) {
     return res.status(400).json({ message: error.message });
@@ -25,7 +25,8 @@ export const createAdvice = async (req, res) => {
       message: result.array()[0].msg,
     });
   }
-  const { title, category, content } = req.body;
+
+  const { title, category, content, userName } = req.body;
 
   const checkAdvice = await Advice.findOne({
     title,
@@ -34,25 +35,27 @@ export const createAdvice = async (req, res) => {
   });
 
   if (checkAdvice) {
-    return res.status(400).json({ message: "advice already exist" });
+    return res.status(400).json({ message: 'advice already exist' });
   }
 
   try {
     const newAdvice = new Advice({
-      title,
-      category,
-      content,
+      title: title,
+      category: category,
+      content: content,
       userId: req.user.id,
+      userName: userName,
     });
 
     await newAdvice.save((error, data) => {
       if (error) {
         return res.status(400).json({ message: error.message });
       }
+
       return res.status(200).json({ advice: data });
     });
   } catch (error) {
-    return res.status(400).json({ message: "something went wrong" });
+    return res.status(400).json({ message: 'something went wrong' });
   }
 };
 
@@ -64,7 +67,7 @@ export const updateAdvice = async (req, res) => {
       message: result.array()[0].msg,
     });
   }
-  const { title, category, content } = req.body;
+  const { title, category, content, userName } = req.body;
 
   const advice = await Advice.findOne({
     _id: req.params.id,
@@ -72,14 +75,14 @@ export const updateAdvice = async (req, res) => {
 
   try {
     if (advice) {
-      await advice.set({ title, category, content });
+      await advice.set({ title, userName, category, content });
       await advice.save();
 
       return res
         .status(200)
-        .json({ message: "advice updated sucessfully", advice });
+        .json({ message: 'advice updated sucessfully', advice });
     } else {
-      return res.status(400).json({ message: "something went wrong" });
+      return res.status(400).json({ message: 'something went wrong' });
     }
   } catch (error) {
     return res.status(400).json({ message: error.message });
@@ -88,7 +91,7 @@ export const updateAdvice = async (req, res) => {
 
 export const deleteAdvice = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    res.status(400).json({ message: "invalid advice id" });
+    res.status(400).json({ message: 'invalid advice id' });
   }
 
   const advice = await Advice.findOne({
@@ -100,9 +103,9 @@ export const deleteAdvice = async (req, res) => {
       await Advice.findOneAndDelete({
         _id: req.params.id,
       });
-      return res.status(200).json({ message: "advice deleted sucessfully" });
+      return res.status(200).json({ message: 'advice deleted sucessfully' });
     } else {
-      return res.status(400).json({ message: "something went wrong" });
+      return res.status(400).json({ message: 'something went wrong' });
     }
   } catch (error) {
     return res.status(400).json({ message: error.message });

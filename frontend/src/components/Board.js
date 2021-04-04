@@ -1,7 +1,9 @@
-import * as React from "react";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import { AddIcon } from "@chakra-ui/icons";
+import * as React from 'react';
+import { Formik, Form, Field } from 'formik';
+import axios from '../helpers/axios';
+import * as Yup from 'yup';
+import { AddIcon } from '@chakra-ui/icons';
+
 import {
   FormControl,
   useDisclosure,
@@ -19,30 +21,70 @@ import {
   ModalBody,
   ModalCloseButton,
   FormErrorMessage,
-} from "@chakra-ui/react";
+  useToast,
+} from '@chakra-ui/react';
+import { useSelector, useDispatch } from 'react-redux';
+import { createAdvice } from '../store/actions/postActions';
 
 export default function Board() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef();
   const finalRef = React.useRef();
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const state = useSelector((state) => state.authReducer);
+  const [showModal, setShowModal] = React.useState(true);
+  React.useEffect(() => {
+    setShowModal(state.authenticated);
+  }, [state.authenticated]);
 
   const selectData = [
     { key: null, value: null },
-    { key: "programming", value: "programming" },
-    { key: "education", value: "education" },
-    { key: "relationship", value: "relationship" },
-    { key: "life", value: "life" },
+    { key: 'Programming', value: 'Programming' },
+    { key: 'Education', value: 'Education' },
+    { key: 'Relationship', value: 'Relationship' },
+    { key: 'Life', value: 'Life' },
+    { key: 'Finance', value: 'Finance' },
   ];
+
+  const addAdvice = () => {
+    if (showModal) {
+      onOpen();
+    } else {
+      toast({
+        title: 'Check',
+        description: 'Sorry, You need to login, or sign up',
+        status: 'info',
+        duration: 2000,
+        isClosable: true,
+        position: 'top',
+      });
+    }
+  };
+
+  const testApi = () => {
+    return (dispatch) =>
+      axios
+        .get('/advice')
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => {});
+  };
 
   return (
     <div>
       <Box
         h="12vh"
-        padding={{ base: "10px", xl: "0px calc((100vw - 1200px) / 2)" }}
+        padding={{ base: '10px', xl: '0px calc((100vw - 1200px) / 2)' }}
       >
         <Box mt="20px" minW="30%">
           <Box display="flex">
-            <Button onClick={onOpen} leftIcon={<AddIcon />} colorScheme="blue">
+            <Button
+              onClick={addAdvice}
+              leftIcon={<AddIcon />}
+              colorScheme="blue"
+            >
               Add Advice
             </Button>
           </Box>
@@ -62,24 +104,38 @@ export default function Board() {
           <ModalBody pb={6}>
             <Formik
               initialValues={{
-                title: "",
-                category: "",
-                content: "",
+                title: '',
+                category: '',
+                content: '',
               }}
               validationSchema={Yup.object({
                 title: Yup.string()
-                  .max(40, "Must be 40 characters or less 😱")
-                  .required("Title is Required"),
-                category: Yup.string().required("category is Required"),
+                  .max(40, 'Must be 40 characters or less 😱')
+                  .required('Title is Required'),
+                category: Yup.string().required('category is Required'),
                 content: Yup.string()
-                  .max(150, "Must be 150 characters or less")
-                  .required("Advice content is Required"),
+                  .max(150, 'Must be 150 characters or less')
+                  .required('Advice content is Required'),
               })}
-              onSubmit={(values, actions) => {
-                setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
+              onSubmit={async (values, actions) => {
+                try {
+                  await dispatch(
+                    createAdvice({ ...values, userName: state.user.userName })
+                  );
                   actions.setSubmitting(false);
-                }, 1000);
+                  onClose();
+                } catch (error) {
+                  actions.setSubmitting(false);
+                  onClose();
+                  toast({
+                    title: 'Check',
+                    description: 'session expired, login again',
+                    status: 'error',
+                    duration: 4000,
+                    isClosable: true,
+                    position: 'top',
+                  });
+                }
               }}
             >
               {(formik) => {
@@ -93,7 +149,7 @@ export default function Board() {
                           }
                         >
                           <Input
-                            {...formik.getFieldProps("title")}
+                            {...formik.getFieldProps('title')}
                             name="title"
                             id="title"
                             placeholder="Title"
@@ -114,7 +170,7 @@ export default function Board() {
                           mt={4}
                         >
                           <Select
-                            {...formik.getFieldProps("category")}
+                            {...formik.getFieldProps('category')}
                             name="category"
                             id="catagory"
                             mb="6px"
@@ -141,7 +197,7 @@ export default function Board() {
                           mt={4}
                         >
                           <Textarea
-                            {...formik.getFieldProps("content")}
+                            {...formik.getFieldProps('content')}
                             id="content"
                             name="content"
                             height="120px"

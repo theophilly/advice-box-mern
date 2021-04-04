@@ -25,16 +25,10 @@ import { signUp } from "../store/actions/authActions";
 
 export default function SignUp() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [refresh, setRefresh] = useState(false);
   const btnRef = React.useRef();
   const toast = useToast();
   const dispatch = useDispatch();
   const state = useSelector((state) => state.authReducer);
-
-  const someMethod = () => {
-    // Force a render with a simulated state change
-    setRefresh(!refresh);
-  };
 
   return (
     <>

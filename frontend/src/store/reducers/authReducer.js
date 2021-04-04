@@ -21,6 +21,8 @@ export default function authReducer(state = initialState, action) {
       token: action.payload.token,
       authenticated: true,
     };
+  } else if (action.type === "SESSION_EXPIRED") {
+    return { ...initialState };
   } else {
     return state;
   }

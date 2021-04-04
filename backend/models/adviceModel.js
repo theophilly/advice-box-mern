@@ -1,26 +1,26 @@
-import mongoose from "mongoose";
-import CategoryModel from "./categoryModel.js";
+import mongoose from 'mongoose';
+import CategoryModel from './categoryModel.js';
 
 const adviceSchema = new mongoose.Schema({
   title: {
     type: String,
-    min: 10,
-    max: 100,
     required: true,
   },
   category: {
     type: String,
-    default: "general",
+    default: 'general',
   },
   content: {
     type: String,
-    min: 10,
-    max: 100,
+    required: true,
+  },
+  userName: {
+    type: String,
     required: true,
   },
   userId: {
     type: mongoose.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
   },
 });
 
@@ -28,12 +28,12 @@ const adviceSchema = new mongoose.Schema({
 //   return this.schema.path("category").enumValues;
 // });
 
-adviceSchema.pre("save", async function (next) {
+adviceSchema.pre('save', async function (next) {
   await CategoryModel.find({}, (err, docs) => {
     docs[0].categories.indexOf(this.category) >= 0
       ? next()
-      : next(new Error("validation failed"));
+      : next(new Error('validation failed'));
   });
 });
 
-export default mongoose.model("Advice", adviceSchema);
+export default mongoose.model('Advice', adviceSchema);
