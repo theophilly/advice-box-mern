@@ -34,7 +34,15 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 
-export const Card = ({ image, category, userName, title, content, name }) => {
+export const Card = ({
+  image,
+  category,
+  userName,
+  title,
+  content,
+  name,
+  userId,
+}) => {
   //Modal
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -58,10 +66,11 @@ export const Card = ({ image, category, userName, title, content, name }) => {
 
   const selectData = [
     { key: null, value: null },
-    { key: 'programming', value: 'programming' },
-    { key: 'education', value: 'education' },
-    { key: 'relationship', value: 'relationship' },
-    { key: 'life', value: 'life' },
+    { key: 'Programming', value: 'Programming' },
+    { key: 'Education', value: 'Education' },
+    { key: 'Relationships', value: 'Relationships' },
+    { key: 'Life', value: 'Life' },
+    { key: 'Finance', value: 'Finance' },
   ];
 
   const handleDelete = () => {
@@ -104,18 +113,20 @@ export const Card = ({ image, category, userName, title, content, name }) => {
         </Text>
         <Spacer></Spacer>
 
-        {user && (
-          <EditIcon
-            onClick={onOpen}
-            sx={{
-              '.my-box:hover &': {
-                display: 'block',
-              },
-            }}
-            d="none"
-            color="#3182CE"
-          ></EditIcon>
-        )}
+        {user
+          ? user._id === userId && (
+              <EditIcon
+                onClick={onOpen}
+                sx={{
+                  '.my-box:hover &': {
+                    display: 'block',
+                  },
+                }}
+                d="none"
+                color="#3182CE"
+              ></EditIcon>
+            )
+          : null}
       </Flex>
 
       <Box

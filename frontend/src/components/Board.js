@@ -42,7 +42,7 @@ export default function Board() {
     { key: null, value: null },
     { key: 'Programming', value: 'Programming' },
     { key: 'Education', value: 'Education' },
-    { key: 'Relationship', value: 'Relationship' },
+    { key: 'Relationships', value: 'Relationships' },
     { key: 'Life', value: 'Life' },
     { key: 'Finance', value: 'Finance' },
   ];
