@@ -1,8 +1,8 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
 import {
   useDisclosure,
   Button,
@@ -20,8 +20,8 @@ import {
   FormHelperText,
   ModalFooter,
   useToast,
-} from "@chakra-ui/react";
-import { login } from "../store/actions/authActions";
+} from '@chakra-ui/react';
+import { login } from '../store/actions/authActions';
 
 export default function SignIn() {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ export default function SignIn() {
 
   return (
     <>
-      <NavLink className="navlink" to="/" ref={btnRef} onClick={onOpen}>
+      <NavLink className="navlink" to="#" ref={btnRef} onClick={onOpen}>
         <i className="fas fa-sign-in-alt"></i>
         Sign In
       </NavLink>
@@ -49,16 +49,16 @@ export default function SignIn() {
             <DrawerBody>
               <Formik
                 initialValues={{
-                  userName: "",
-                  password: "",
+                  userName: '',
+                  password: '',
                 }}
                 validationSchema={Yup.object({
                   userName: Yup.string()
-                    .max(15, "Must be 15 characters or less")
-                    .required("Username is required"),
+                    .max(15, 'Must be 15 characters or less')
+                    .required('Username is required'),
                   password: Yup.string()
-                    .min(6, "password must be atleast 6 characters")
-                    .required("Password is required"),
+                    .min(6, 'password must be atleast 6 characters')
+                    .required('Password is required'),
                 })}
                 onSubmit={async (values, actions) => {
                   await dispatch(login(values));
@@ -67,23 +67,23 @@ export default function SignIn() {
                     window.store.getState().authReducer.authenticated === true
                   ) {
                     toast({
-                      title: "Login successful.",
-                      description: "You are now logged in.",
-                      status: "success",
+                      title: 'Login successful.',
+                      description: 'You are now logged in.',
+                      status: 'success',
                       duration: 9000,
                       isClosable: true,
-                      position: "top",
+                      position: 'top',
                     });
                     actions.setSubmitting(false);
                     onClose();
                   } else {
                     toast({
-                      title: "Error",
+                      title: 'Error',
                       description: window.store.getState().authReducer.error,
-                      status: "error",
+                      status: 'error',
                       duration: 9000,
                       isClosable: true,
-                      position: "top",
+                      position: 'top',
                     });
                     actions.setSubmitting(false);
                   }
@@ -102,7 +102,7 @@ export default function SignIn() {
                             }
                           >
                             <Input
-                              {...formik.getFieldProps("userName")}
+                              {...formik.getFieldProps('userName')}
                               name="userName"
                               id="userName"
                               placeholder="username"
@@ -123,7 +123,7 @@ export default function SignIn() {
                             }
                           >
                             <Input
-                              {...formik.getFieldProps("password")}
+                              {...formik.getFieldProps('password')}
                               id="password"
                               name="password"
                               type="password"

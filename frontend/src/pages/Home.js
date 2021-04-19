@@ -153,36 +153,75 @@ export default function Home() {
             <Tab>Programming</Tab>
             <Tab>Education</Tab>
             <Tab>Finance</Tab>
-            <Tab>Relationship</Tab>
-            <Tab>General</Tab>
+            <Tab>Relationships</Tab>
+            <Tab>Life</Tab>
           </TabList>
         </ScrollView>
 
         <TabPanels>
           <TabPanel>
             <Flex justifyContent="center" wrap="wrap">
-              {posts.data
-                ? posts.data.reverse().map((item) => <Card {...item}></Card>)
+              {posts[0]
+                ? posts.map((item) => <Card {...item}></Card>)
                 : Array(13)
                     .fill('')
                     .map(() => <Card></Card>)}
-              {console.log(posts)}
             </Flex>
           </TabPanel>
           <TabPanel>
-            <p>two!</p>
+            <Flex justifyContent="center" wrap="wrap">
+              {posts[0]
+                ? posts
+                    .filter((item) => item.category === 'Programming')
+                    .map((item) => <Card {...item}></Card>)
+                : Array(13)
+                    .fill('')
+                    .map(() => <Card></Card>)}
+            </Flex>
           </TabPanel>
           <TabPanel>
-            <p>two!</p>
+            <Flex justifyContent="center" wrap="wrap">
+              {posts[0]
+                ? posts
+                    .filter((item) => item.category === 'Education')
+                    .map((item) => <Card {...item}></Card>)
+                : Array(13)
+                    .fill('')
+                    .map(() => <Card></Card>)}
+            </Flex>
           </TabPanel>
           <TabPanel>
-            <p>two!</p>
+            <Flex justifyContent="center" wrap="wrap">
+              {posts[0]
+                ? posts
+                    .filter((item) => item.category === 'Finance')
+                    .map((item) => <Card {...item}></Card>)
+                : Array(13)
+                    .fill('')
+                    .map(() => <Card></Card>)}
+            </Flex>
           </TabPanel>
           <TabPanel>
-            <p>two!</p>
+            <Flex justifyContent="center" wrap="wrap">
+              {posts[0]
+                ? posts
+                    .filter((item) => item.category === 'Relationships')
+                    .map((item) => <Card {...item}></Card>)
+                : Array(13)
+                    .fill('')
+                    .map(() => <Card></Card>)}
+            </Flex>
           </TabPanel>
           <TabPanel>
-            <p>two!</p>
+            <Flex justifyContent="center" wrap="wrap">
+              {posts[0]
+                ? posts
+                    .filter((item) => item.category === 'Life')
+                    .map((item) => <Card {...item}></Card>)
+                : Array(13)
+                    .fill('')
+                    .map(() => <Card></Card>)}
+            </Flex>
           </TabPanel>
         </TabPanels>
       </Tabs>

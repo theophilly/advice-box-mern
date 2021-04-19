@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   useDisclosure,
   Button,
@@ -20,8 +20,8 @@ import {
   FormHelperText,
   ModalFooter,
   useToast,
-} from "@chakra-ui/react";
-import { signUp } from "../store/actions/authActions";
+} from '@chakra-ui/react';
+import { signUp } from '../store/actions/authActions';
 
 export default function SignUp() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -32,7 +32,7 @@ export default function SignUp() {
 
   return (
     <>
-      <NavLink className="navlink" to="/" ref={btnRef} onClick={onOpen}>
+      <NavLink className="navlink" to="#" ref={btnRef} onClick={onOpen}>
         <i className="fas fa-user-plus"></i>
         Sign Up
       </NavLink>
@@ -50,20 +50,20 @@ export default function SignUp() {
             <DrawerBody>
               <Formik
                 initialValues={{
-                  userName: "",
-                  password: "",
-                  confirmPassword: "",
+                  userName: '',
+                  password: '',
+                  confirmPassword: '',
                 }}
                 validationSchema={Yup.object({
                   userName: Yup.string()
-                    .max(15, "Must be 15 characters or less")
-                    .required("Username is Required"),
+                    .max(15, 'Must be 15 characters or less')
+                    .required('Username is Required'),
                   password: Yup.string()
-                    .min(6, "password must be atleast 6 characters")
-                    .required("Password is Required"),
+                    .min(6, 'password must be atleast 6 characters')
+                    .required('Password is Required'),
                   confirmPassword: Yup.string()
-                    .oneOf([Yup.ref("password"), null], "password must match")
-                    .required("Please confirm password 😱"),
+                    .oneOf([Yup.ref('password'), null], 'password must match')
+                    .required('Please confirm password 😱'),
                 })}
                 onSubmit={async (values, actions) => {
                   const { userName, password } = values;
@@ -74,24 +74,24 @@ export default function SignUp() {
                     window.store.getState().authReducer.authenticated === true
                   ) {
                     toast({
-                      title: "Account created.",
+                      title: 'Account created.',
                       description: "We've created your account for you.",
-                      status: "success",
+                      status: 'success',
                       duration: 9000,
                       isClosable: true,
-                      position: "top",
+                      position: 'top',
                     });
                     actions.setSubmitting(false);
                     onClose();
                   } else {
                     console.log(state.error);
                     toast({
-                      title: "Error",
+                      title: 'Error',
                       description: window.store.getState().authReducer.error,
-                      status: "error",
+                      status: 'error',
                       duration: 9000,
                       isClosable: true,
-                      position: "top",
+                      position: 'top',
                     });
                     actions.setSubmitting(false);
                   }
@@ -110,7 +110,7 @@ export default function SignUp() {
                             }
                           >
                             <Input
-                              {...formik.getFieldProps("userName")}
+                              {...formik.getFieldProps('userName')}
                               name="userName"
                               id="userName"
                               placeholder="username"
@@ -131,7 +131,7 @@ export default function SignUp() {
                             }
                           >
                             <Input
-                              {...formik.getFieldProps("password")}
+                              {...formik.getFieldProps('password')}
                               id="password"
                               name="password"
                               type="password"
@@ -153,7 +153,7 @@ export default function SignUp() {
                             }
                           >
                             <Input
-                              {...formik.getFieldProps("confirmPassword")}
+                              {...formik.getFieldProps('confirmPassword')}
                               id="confirmPassword"
                               name="confirmPassword"
                               type="password"

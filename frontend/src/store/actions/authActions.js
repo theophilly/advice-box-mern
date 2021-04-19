@@ -1,5 +1,5 @@
-import * as actionType from "../actionTypes/authActionsTypes";
-import axios from "../../helpers/axios";
+import * as actionType from '../actionTypes/authActionsTypes';
+import axios from '../../helpers/axios';
 
 export const login = (user) => {
   console.log(user);
@@ -7,10 +7,10 @@ export const login = (user) => {
     dispatch({ type: actionType.LOGIN_BEGIN });
 
     await axios
-      .post("/user/signin", { ...user })
+      .post('/user/signin', { ...user })
       .then((res) => {
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("user", JSON.stringify(res.data.user));
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
         dispatch({
           type: actionType.ON_LOGIN_SUCCESS,
           payload: {
@@ -34,7 +34,7 @@ export const signUp = (user) => {
     dispatch({ type: actionType.LOGIN_BEGIN });
 
     await axios
-      .post("/user/signup", { ...user })
+      .post('/user/signup', { ...user })
       .then((res) => {
         dispatch({
           type: actionType.ON_LOGIN_SUCCESS,
@@ -42,8 +42,8 @@ export const signUp = (user) => {
             ...res.data,
           },
         });
-        localStorage.setItem("token", JSON.stringify(res.data.token));
-        localStorage.setItem("user", JSON.stringify(res.data.user));
+        localStorage.setItem('token', JSON.stringify(res.data.token));
+        localStorage.setItem('user', JSON.stringify(res.data.user));
       })
       .catch((error) => {
         dispatch({
@@ -53,5 +53,12 @@ export const signUp = (user) => {
           },
         });
       });
+  };
+};
+
+export const logout = () => {
+  localStorage.clear();
+  return async (dispatch) => {
+    dispatch({ type: 'SIGN_OUT' });
   };
 };

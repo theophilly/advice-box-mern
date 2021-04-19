@@ -10,50 +10,91 @@ export const createAdvice = (advice) => {
   }
 
   return async (dispatch) => {
-    let post = null;
+    let posts = null;
     try {
-      post = await axios.post('/advice/create-advice', { ...advice });
-    } catch (error) {
-      console.log(error.response.data.message);
-    }
-    console.log(post);
-
-    let posts;
-    try {
-      posts = await axios.get('/advice/get-all-advice');
+      posts = await axios.post('/advice/create-advice', { ...advice });
       if (posts) {
         dispatch({
           type: actionTypes.ON_FETCH_SUCCESS,
           payload: {
-            posts: posts,
+            posts: posts.data.allAdvices,
           },
         });
       }
     } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
+};
+
+export const updateAdvice = (advice) => {
+  let token = localStorage.getItem('token');
+
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
+
+  return async (dispatch) => {
+    let post = null;
+    try {
+      post = await axios.put(`/advice/update/${advice._id}`, { ...advice });
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+
+    if (post) {
+      await dispatch({
+        type: actionTypes.ON_FETCH_SUCCESS,
+        payload: {
+          posts: post.data.allAdvices,
+        },
+      });
+    }
+  };
+};
+
+export const deleteAdvice = (_id) => {
+  let token = localStorage.getItem('token');
+
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
+
+  return async (dispatch) => {
+    dispatch({ type: actionTypes.FETCH_BEGIN });
+    let post;
+    try {
+      post = await axios.delete(`/advice/delete/${_id}`);
+    } catch (error) {
       console.log(error);
     }
 
-    console.log(posts);
+    if (post) {
+      await dispatch({
+        type: actionTypes.ON_FETCH_SUCCESS,
+        payload: {
+          posts: post.data.allAdvices,
+        },
+      });
+    }
   };
 };
 
 export const getAllAdvice = () => {
   return async (dispatch) => {
     let post = null;
-    console.log('i was fired');
     try {
       post = await axios.get('/advice/get-all-advice');
       if (post) {
         dispatch({
           type: actionTypes.ON_FETCH_SUCCESS,
           payload: {
-            posts: post,
+            posts: post.data.allAdvices,
           },
         });
       }
     } catch (error) {
       console.log(error);
     }
-    console.log(post);
   };
 };

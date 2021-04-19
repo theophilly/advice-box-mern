@@ -44,6 +44,23 @@ route.post('/signout', async (req, res) => {
   res.clearCookie();
   return res.status(200).json({ message: 'You have logout successfully' });
 });
+route.get('/getuser/:userName', async (req, res) => {
+  const userName = req.params.userName;
+
+  try {
+    const user = await User.findOne({ userName }).select(
+      'userName profilePicture about'
+    );
+
+    if (user) {
+      return res.status(200).json({ user });
+    } else {
+      return res.status(400).json({ message: 'user' });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error });
+  }
+});
 
 route.post('/signup', signUpValidator, async (req, res) => {
   const result = validationResult(req);

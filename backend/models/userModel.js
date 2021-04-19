@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema(
   {
@@ -30,24 +30,26 @@ const userSchema = new mongoose.Schema(
     },
     profilePicture: {
       type: String,
+      default: '',
     },
     about: {
       type: String,
+      default: '',
     },
     role: {
       type: String,
-      enum: ["user", "admin"],
-      default: "user",
+      enum: ['user', 'admin'],
+      default: 'user',
     },
   },
   { timestamps: true }
 );
 
-userSchema.virtual("password").set(function (password) {
+userSchema.virtual('password').set(function (password) {
   this.hashPassword = bcrypt.hashSync(password, 10);
 });
 
-userSchema.virtual("fullName").get(function () {
+userSchema.virtual('fullName').get(function () {
   return `${this.firstName} ${this.lastName}`;
 });
 
@@ -57,4 +59,4 @@ userSchema.methods = {
   },
 };
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model('User', userSchema);

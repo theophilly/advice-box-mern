@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
 import {
   Box,
   Wrap,
@@ -30,9 +31,11 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
+  useToast,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
+import { updateAdvice, deleteAdvice } from '../store/actions/postActions';
 
 export const Card = ({
   image,
@@ -42,12 +45,20 @@ export const Card = ({
   content,
   name,
   userId,
+  _id,
 }) => {
   //Modal
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  //Toast
+  const toast = useToast();
+
   //dispatch and selector
-  const { user } = useSelector((state) => state.authReducer);
+  const {
+    authReducer: { user },
+    postReducer: { loading },
+  } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   //Alert
   const [isAlertOpen, setIsAlertOpen] = React.useState(false);
@@ -56,9 +67,23 @@ export const Card = ({
   const cancelRef = React.useRef();
 
   //onclose for Alert box
-  const alertAffirmation = () => {
-    setIsAlertOpen(false);
-    onClose();
+  const alertAffirmation = async () => {
+    try {
+      await dispatch(deleteAdvice(_id));
+      setIsAlertOpen(false);
+      onClose();
+    } catch (error) {
+      setIsAlertOpen(false);
+      onClose();
+      toast({
+        title: 'Check',
+        description: 'session expired, login again',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+        position: 'top',
+      });
+    }
   };
   const alertRejection = () => {
     setIsAlertOpen(false);
@@ -94,23 +119,27 @@ export const Card = ({
       overflow="hidden"
       className="my-box"
     >
-      <Flex cursor="pointer" alignItems="center">
-        <Avatar
-          mr="5px"
-          height="25px"
-          width="25px"
-          name={userName}
-          src={image}
-        />
-        <Text
-          color={() => {
-            if (userName === 'Admin') return 'green';
-          }}
-          fontWeight="bold"
-          fontSize="sm"
-        >
-          {userName}
-        </Text>
+      <Flex alignItems="center">
+        <Link to={`/dashboard/${userName}`}>
+          <Flex cursor="pointer" alignItems="center">
+            <Avatar
+              mr="5px"
+              height="25px"
+              width="25px"
+              name={userName}
+              src={image}
+            />
+            <Text
+              color={() => {
+                if (userName === 'Admin') return 'green';
+              }}
+              fontWeight="bold"
+              fontSize="sm"
+            >
+              {userName}
+            </Text>
+          </Flex>
+        </Link>
         <Spacer></Spacer>
 
         {user
@@ -167,12 +196,23 @@ export const Card = ({
                   .max(150, 'Must be 150 characters or less')
                   .required('Advice content is Required'),
               })}
-              onSubmit={(values, actions) => {
-                setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
+              onSubmit={async (values, actions) => {
+                try {
+                  await dispatch(updateAdvice({ ...values, _id }));
                   actions.setSubmitting(false);
-                }, 1000);
-                onClose();
+                  onClose();
+                } catch (error) {
+                  actions.setSubmitting(false);
+                  onClose();
+                  toast({
+                    title: 'Check',
+                    description: 'session expired, login again',
+                    status: 'error',
+                    duration: 4000,
+                    isClosable: true,
+                    position: 'top',
+                  });
+                }
               }}
             >
               {(formik) => {
@@ -290,7 +330,12 @@ export const Card = ({
               <Button ref={cancelRef} onClick={alertRejection}>
                 Cancel
               </Button>
-              <Button colorScheme="red" onClick={alertAffirmation} ml={3}>
+              <Button
+                isLoading={loading}
+                colorScheme="red"
+                onClick={alertAffirmation}
+                ml={3}
+              >
                 Delete
               </Button>
             </AlertDialogFooter>

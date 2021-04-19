@@ -1,10 +1,10 @@
-import * as actionType from "../actionTypes/authActionsTypes";
+import * as actionType from '../actionTypes/authActionsTypes';
 
 const initialState = {
   loading: false,
   user: null,
-  error: "",
-  token: "",
+  error: '',
+  token: '',
   authenticated: false,
 };
 
@@ -21,8 +21,10 @@ export default function authReducer(state = initialState, action) {
       token: action.payload.token,
       authenticated: true,
     };
-  } else if (action.type === "SESSION_EXPIRED") {
+  } else if (action.type === 'SESSION_EXPIRED') {
     return { ...initialState };
+  } else if (action.type === 'SIGN_OUT') {
+    return state;
   } else {
     return state;
   }
