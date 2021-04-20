@@ -33,6 +33,7 @@ import {
   AlertDialogOverlay,
   useToast,
 } from '@chakra-ui/react';
+import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import { updateAdvice, deleteAdvice } from '../store/actions/postActions';
@@ -62,6 +63,23 @@ export const Card = ({
 
   //Alert
   const [isAlertOpen, setIsAlertOpen] = React.useState(false);
+
+  //profile
+  const [profile, setProfile] = React.useState({
+    userName: null,
+    about: null,
+    profilePicture: null,
+  });
+  React.useEffect(() => {
+    const getUser = async (userName) => {
+      let fecthedUser = await axios.get(
+        `http://127.0.0.1:5000/api/user/getuser/${userName}`
+      );
+      return fecthedUser;
+    };
+    getUser(userName).then(({ data: { user } }) => setProfile({ ...user }));
+  }, []);
+
   const initialRef = React.useRef();
   const finalRef = React.useRef();
   const cancelRef = React.useRef();
@@ -127,7 +145,7 @@ export const Card = ({
               height="25px"
               width="25px"
               name={userName}
-              src={image}
+              src={`/${profile.profilePicture}`}
             />
             <Text
               color={() => {

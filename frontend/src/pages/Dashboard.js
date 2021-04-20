@@ -16,22 +16,27 @@ import {
   Button,
   FormLabel,
   Center,
+  useToast,
   Input,
   FormErrorMessage,
   FormHelperText,
+  Badge,
 } from '@chakra-ui/react';
 import { EditIcon, SettingsIcon } from '@chakra-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { Card } from '../components/Card';
 import axios from 'axios';
+import { updateUser } from '../store/actions/authActions';
 
 export default function Dashboard() {
   const {
     postReducer: { posts },
     authReducer: { user },
   } = useSelector((state) => state);
-  const [edit, setEdit] = useState(true);
-  const [advices, setAdvices] = useState(0);
+  const dispatch = useDispatch();
+  const [edit, setEdit] = useState(false);
+  const toast = useToast();
+  const [reloadProfile, setReloadProfile] = useState(0);
   let { userName } = useParams();
   const [profile, setProfile] = useState({
     userName: null,
@@ -48,13 +53,20 @@ export default function Dashboard() {
     };
     getUser(userName).then(({ data: { user } }) => setProfile({ ...user }));
     console.log(profile);
-  }, [userName]);
+  }, [userName, reloadProfile]);
 
   // if (id.match(/^[0-9a-fA-F]{24}$/)) {
   //   // it's an ObjectID
   // } else {
   //   return <Redirect to="/home" />;
   // }
+
+  const rebuildData = (data) => {
+    let formData = new FormData();
+    formData.append('file', data.file);
+    formData.append('about', data.about);
+    return formData;
+  };
 
   const FILE_SIZE = 200000;
   const SUPPORTED_FORMATS = [
@@ -65,8 +77,7 @@ export default function Dashboard() {
   ];
   return (
     <Layout>
-      <Text>{JSON.stringify(profile)}</Text>
-      <Box d="flex">
+      <Box flexWrap="wrap" d="flex">
         <Box
           h="12vh"
           padding={{ base: '10px', xl: '20px calc((100vw - 1200px) / 2)' }}
@@ -81,9 +92,21 @@ export default function Dashboard() {
             User Profile
           </Text>
         </Box>
+
         {user
           ? profile.userName === user.userName &&
-            profile.about === '' && <Center>please update your profile</Center>
+            profile.about === '' && (
+              <Center>
+                <Badge
+                  padding="5px 10px"
+                  // bg="yellow"
+                  // color="white"
+                  colorScheme="yellow"
+                >
+                  please update your profile
+                </Badge>
+              </Center>
+            )
           : null}
       </Box>
       <Flex
@@ -132,8 +155,34 @@ export default function Dashboard() {
                   .required('about is required'),
               })}
               onSubmit={async (values, actions) => {
-                var formData = new FormData();
-                console.log(values);
+                var formData = rebuildData(values);
+
+                await dispatch(updateUser(formData));
+
+                if (window.store.getState().authReducer.updated === true) {
+                  toast({
+                    title: 'success',
+                    description: 'updated successfully',
+                    status: 'success',
+                    duration: 1000,
+                    isClosable: true,
+                    position: 'top',
+                  });
+                  actions.setSubmitting(false);
+                  setReloadProfile(reloadProfile + 1);
+                  setEdit(!edit);
+                } else {
+                  toast({
+                    title: 'Error',
+                    description: window.store.getState().authReducer.error,
+                    status: 'error',
+                    duration: 2000,
+                    isClosable: true,
+                    position: 'top',
+                  });
+                  actions.setSubmitting(false);
+                  setEdit(!edit);
+                }
               }}
             >
               {(formik) => {
@@ -219,7 +268,7 @@ export default function Dashboard() {
             bg="#F7FAFC"
             alignSelf="flex-start"
             borderRadius="20px"
-            pt="20px"
+            p="20px 10px"
             flex={{ md: '0.3' }}
             width="100%"
           >
@@ -229,20 +278,24 @@ export default function Dashboard() {
               flexDirection="column"
               alignItems="center"
             >
-              <Link
-                onClick={() => setEdit(!edit)}
-                _hover={{ textDecoration: 'none' }}
-                top="-13px"
-                right="7"
-                position="absolute"
-              >
-                edit <SettingsIcon />
-              </Link>
+              {user
+                ? profile.userName === user.userName && (
+                    <Link
+                      onClick={() => setEdit(!edit)}
+                      _hover={{ textDecoration: 'none' }}
+                      top="-13px"
+                      right="7"
+                      position="absolute"
+                    >
+                      update <SettingsIcon />
+                    </Link>
+                  )
+                : null}
               <WrapItem mb="10px">
                 <Avatar
                   size="2xl"
-                  name="theodasa"
-                  src="https://bit.ly/sage-adebayo"
+                  name={profile.userName}
+                  src={`/${profile.profilePicture}`}
                 />
               </WrapItem>
               <Text

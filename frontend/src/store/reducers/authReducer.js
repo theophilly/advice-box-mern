@@ -6,6 +6,7 @@ const initialState = {
   error: '',
   token: '',
   authenticated: false,
+  updated: false,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -21,10 +22,14 @@ export default function authReducer(state = initialState, action) {
       token: action.payload.token,
       authenticated: true,
     };
-  } else if (action.type === 'SESSION_EXPIRED') {
+  } else if (action.type === actionType.SESSION_EXPIRED) {
     return { ...initialState };
-  } else if (action.type === 'SIGN_OUT') {
-    return state;
+  } else if (action.type === actionType.SIGN_OUT) {
+    return { ...initialState };
+  } else if (action.type === actionType.ON_UPDATE_SUCCESS) {
+    return { ...state, user: action.payload.user, updated: true };
+  } else if (action.type === actionType.ON_UPDATE_ERROR) {
+    return { ...state, error: action.payload.error, updated: false };
   } else {
     return state;
   }
