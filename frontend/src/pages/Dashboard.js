@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { BrowserRouter, Route, Redirect, useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import Layout from '../components/layout';
 import {
@@ -134,8 +134,8 @@ export default function Dashboard() {
           >
             <Formik
               initialValues={{
-                file: undefined,
-                about: '',
+                file: profile.profilePicture,
+                about: profile.about,
               }}
               validationSchema={Yup.object().shape({
                 file: Yup.mixed()
@@ -333,7 +333,15 @@ export default function Dashboard() {
 
         <Box width="300px" ml={{ md: '20px' }} flex={{ md: '0.7' }}>
           <Box borderBottom="2px solid #E1E5EB" p="15px 10px" d="flex" mt="5px">
-            <Text fontWeight="semibold">Your Advices</Text>
+            {user ? (
+              profile.userName === user.userName ? (
+                <Text fontWeight="semibold"> Your Advices</Text>
+              ) : (
+                <Text fontWeight="semibold"> {profile.userName} Advices</Text>
+              )
+            ) : (
+              <Text fontWeight="semibold"> {profile.userName} Advices</Text>
+            )}
             <Spacer></Spacer>
           </Box>
 

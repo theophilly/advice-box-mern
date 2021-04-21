@@ -37,7 +37,7 @@ export default function Header() {
             <NavLink
               onClick={() => dispatch(logout())}
               className="navlink"
-              to="/home"
+              to="#"
             >
               <i style={{ color: 'red' }} class="fas fa-power-off"></i>
               Sign Out

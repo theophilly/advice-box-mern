@@ -6,6 +6,7 @@ import { getAllAdvice } from './store/actions/postActions';
 import Dashboard from './pages/Dashboard';
 import { login } from './store/actions/authActions';
 import { ON_LOGIN_SUCCESS } from './store/actionTypes/authActionsTypes';
+import About from './pages/About';
 
 function App() {
   const dispatch = useDispatch();
@@ -30,7 +31,8 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={Home}></Route>
+        <Route path="/" exact component={About}></Route>
+        <Route path="/home" exact component={Home}></Route>
         <Route path="/dashboard/:userName" component={Dashboard}></Route>
       </Switch>
     </BrowserRouter>

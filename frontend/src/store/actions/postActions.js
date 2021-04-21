@@ -1,5 +1,6 @@
 import * as actionTypes from '../actionTypes/postActionTypes';
 import axios from '../../helpers/axios';
+import newAxios from 'axios';
 
 export const createAdvice = (advice) => {
   let token = localStorage.getItem('token');
@@ -94,6 +95,38 @@ export const getAllAdvice = () => {
         });
       }
     } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const sendMail = (mail) => {
+  let post;
+  return async (dispatch) => {
+    try {
+      post = await axios.post('/receivemail', mail);
+      console.log(post);
+      if (post.status == 200) {
+        dispatch({
+          type: actionTypes.MAIL_SUCCESS,
+          payload: {
+            successMessage: post.data.message,
+          },
+        });
+      } else {
+        dispatch({
+          type: actionTypes.MAIL_ERROR,
+          payload: {
+            error: 'something went wrong',
+          },
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: actionTypes.MAIL_ERROR,
+        payload: {
+          error: 'something went wrong',
+        },
+      });
       console.log(error);
     }
   };

@@ -7,6 +7,8 @@ import bodyParser from 'body-parser';
 import userRoute from './routes/userRoute.js';
 import Category from './models/categoryModel.js';
 import adviceRoute from './routes/adviceRoute.js';
+import { mailValidator } from './validators/index.js';
+import { receiveMail } from './controllers/receiveMail.js';
 
 dotenv.config();
 const app = express();
@@ -23,6 +25,8 @@ mongoose
 
 app.use('/api/user', userRoute);
 app.use('/api', adviceRoute);
+
+app.post('/api/receivemail', mailValidator, receiveMail);
 
 app.get('/api/advice', async (req, res) => {
   const m = new Category({

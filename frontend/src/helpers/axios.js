@@ -55,7 +55,8 @@ axiosInstance.interceptors.request.use(async (req) => {
     if (
       req.url == '/user/signin' ||
       req.url == '/user/signup' ||
-      '/advice/get-all-advice' ||
+      req.url == '/advice/get-all-advice' ||
+      req.url == '/receivemail' ||
       req.url == '/user/getuser/:userName'
     ) {
       return req;

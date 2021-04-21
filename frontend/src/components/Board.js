@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Formik, Form, Field } from 'formik';
-import axios from '../helpers/axios';
 import * as Yup from 'yup';
 import { AddIcon } from '@chakra-ui/icons';
 
@@ -62,18 +61,8 @@ export default function Board() {
     }
   };
 
-  const testApi = () => {
-    return (dispatch) =>
-      axios
-        .get('/advice')
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((error) => {});
-  };
-
   return (
-    <div>
+    <Box>
       <Box
         h="12vh"
         padding={{ base: '10px', xl: '0px calc((100vw - 1200px) / 2)' }}
@@ -229,7 +218,7 @@ export default function Board() {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </div>
+    </Box>
   );
 }
 
