@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import path from 'path';
 
 import userRoute from './routes/userRoute.js';
 import Category from './models/categoryModel.js';
@@ -25,6 +26,14 @@ mongoose
 
 app.use('/api/user', userRoute);
 app.use('/api', adviceRoute);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('frontend/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(path.resolve(), 'frontend', 'build', 'index.html'));
+  });
+}
 
 app.post('/api/receivemail', mailValidator, receiveMail);
 
