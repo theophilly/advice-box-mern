@@ -1,6 +1,8 @@
 import 'intersection-observer';
 import React, { useState, useRef } from 'react';
 import { ScrollView } from '@cantonjs/react-scroll-view';
+import NewPagination from 'react-responsive-pagination';
+
 import {
   Tabs,
   TabList,
@@ -33,126 +35,9 @@ export default function Home() {
   const [currentR, setCurrentR] = useState(1);
   const [currentL, setCurrentL] = useState(1);
 
-  const executeScroll = () => myRef.current.scrollIntoView();
-  const postdata = [
-    {
-      image: 'https://bit.ly/prosper-baba',
-      username: 'Admin',
-      name: 'Admin',
-      title: 'Search for the keywords to learn more ab',
-      content:
-        ' To ignore, add // eslint-disable-next-line to the line before.nt-disable-next-line to theline before.',
-    },
-
-    {
-      image: 'https://bit.ly/tioluwani-kolawole',
-      username: 'Olamide',
-      name: 'Olamide',
-      title: ' Search for the keywords to learn more about each warning. ',
-      content:
-        '   Search for the keywords to learn more about each warning. To ignore, add// esbbbbbbbbbbbbbbbbbbbbbbb',
-    },
-
-    {
-      image: 'https://bit.ly/kent-c-dodds',
-      username: 'Akin',
-      name: 'Akin',
-      title: 'Search for the keywords to learn more about dd dd',
-      content:
-        '   Search for the keywords to learn more about each warning. To ignore, add// eslint-disable-next-line to the line1231 before. Search for the keyword come ',
-    },
-
-    {
-      image: 'https://bit.ly/sage-adebayo',
-      username: 'Melvin',
-      name: 'Melvin',
-      title:
-        ' Okay let me quickly do tis eywords to learn more about each warning. ',
-      content:
-        '   Search for the keywords to learn more about each warning. To ignore, add// eslint-disable-next-line to the line before. ',
-    },
-
-    {
-      image: 'https://bit.ly/prosper-baba',
-      username: 'Ikechujwu',
-      name: 'Ikechujwu',
-      title: ' Search for the keywords to learn more about each warning. ',
-      content:
-        '   Search for the keywords to learn more about each warning. To ignore, add// eslint-disable-next-line to the line before. ',
-    },
-
-    {
-      image: 'https://bit.ly/dan-abramov',
-      username: 'Basit',
-      name: 'Basit',
-      title: ' Search for the keywords to learn more about each warning. ',
-      content:
-        '   Search for the keywords to learn more about each warning. To ignore, add// eslint-disable-next-line to the line before. ',
-    },
-
-    {
-      image: 'https://bit.ly/ryan-florence',
-      username: 'Daramola',
-      name: 'Daramola',
-      title: ' Search for the keywords to learn more about each warning. ',
-      content:
-        '   Search for the keywords to learn more about each warning. To ignore, add// eslint-disable-next-line to the line before. ',
-    },
-
-    {
-      image: 'https://bit.ly/code-beast',
-      username: 'Sleassa',
-      name: 'Sleassa',
-      title: ' Search for the keywords to learn more about each warning. ',
-      content:
-        '   Search for the keywords to learn more about each warning. To ignore, add// eslint-disable-next-line to the line before. Search for the keyword to learn more about each warning. To ignore, add // esli ',
-    },
-
-    {
-      image: 'https://bit.ly/kent-c-dodds',
-      username: 'Nonomari',
-      name: 'Nonomari',
-      title: ' Search for the keywords to learn more about each warning. ',
-      content:
-        '   Search for the keywords to learn more about each warning. To ignore, add// eslint-disable-next-line to the line before. ',
-    },
-
-    {
-      image: 'https://bit.ly/prosper-baba',
-      username: 'Quadri',
-      name: 'Quadri',
-      title: ' Search for the keywords to learn more about each warning. ',
-      content:
-        '   Search for the keywords to learn more about each warning. To ignore, add// eslint-disable-next-line to the line before. ',
-    },
-
-    {
-      image: 'https://bit.ly/tioluwani-kolawole',
-      username: 'Emmanuel',
-      name: 'Emmanuel',
-      title: ' Search for the keywords to learn more about each warning. ',
-      content:
-        '   Search for the keywords to learn more about each warning. To ignore, add// eslint-disable-next-line to the line before. ',
-    },
-
-    {
-      image: 'https://bit.ly/sage-adebayo',
-      username: 'Akolade',
-      name: 'Akolade',
-      title: ' Search for the keywords to learn more about each warning. ',
-      content:
-        '   Search for the keywords to learn more about each warning. To ignore, add// eslint-disable-next-line to the line before. ',
-    },
-
-    {
-      image: 'https://bit.ly/code-beast',
-      username: 'Dandada',
-      name: 'Dandada',
-      title: ' Search for the keywords to learn more about each warning. ',
-      content:
-        '   Search for the keywords to learn more about each warning. To ignore, add// eslint-disable-next-line to the line before. ',
-    },
-  ];
+  const executeScroll = () => {
+    myRef.current.scrollIntoView();
+  };
 
   return (
     <Layout>
@@ -180,15 +65,19 @@ export default function Home() {
                     .fill('')
                     .map(() => <Card></Card>)}
             </Flex>
-            <Pagination
-              itemsCount={
-                posts[0] ? Object.keys(posts.map((item) => item)).length : 0
-              }
-              pageSize={9}
-              currentPage={currentA}
-              onPageChange={setCurrentA}
-              scroll={executeScroll}
-            ></Pagination>
+            <Box mt="20px" onClick={executeScroll}>
+              <NewPagination
+                total={
+                  posts[0]
+                    ? Math.ceil(
+                        Object.keys(posts.map((item) => item)).length / 9
+                      )
+                    : 0
+                }
+                current={currentA}
+                onPageChange={setCurrentA}
+              ></NewPagination>
+            </Box>
           </TabPanel>
           <TabPanel>
             <Flex justifyContent="center" wrap="wrap">
@@ -202,19 +91,23 @@ export default function Home() {
                     .fill('')
                     .map(() => <Card></Card>)}
             </Flex>
-            <Pagination
-              itemsCount={
-                posts[0]
-                  ? Object.keys(
-                      posts.filter((item) => item.category === 'Programming')
-                    ).length
-                  : 0
-              }
-              pageSize={9}
-              currentPage={currentP}
-              onPageChange={setCurrentP}
-              scroll={executeScroll}
-            ></Pagination>
+            <Box mt="20px" onClick={executeScroll}>
+              <NewPagination
+                total={
+                  posts[0]
+                    ? Math.ceil(
+                        Object.keys(
+                          posts.filter(
+                            (item) => item.category === 'Programming'
+                          )
+                        ).length / 9
+                      )
+                    : 0
+                }
+                current={currentP}
+                onPageChange={setCurrentP}
+              ></NewPagination>
+            </Box>
           </TabPanel>
           <TabPanel>
             <Flex justifyContent="center" wrap="wrap">
@@ -228,19 +121,21 @@ export default function Home() {
                     .fill('')
                     .map(() => <Card></Card>)}
             </Flex>
-            <Pagination
-              itemsCount={
-                posts[0]
-                  ? Object.keys(
-                      posts.filter((item) => item.category === 'Education')
-                    ).length
-                  : 0
-              }
-              pageSize={9}
-              currentPage={currentE}
-              onPageChange={setCurrentE}
-              scroll={executeScroll}
-            ></Pagination>
+            <Box mt="20px" onClick={executeScroll}>
+              <NewPagination
+                total={
+                  posts[0]
+                    ? Math.ceil(
+                        Object.keys(
+                          posts.filter((item) => item.category === 'Education')
+                        ).length / 9
+                      )
+                    : 0
+                }
+                current={currentE}
+                onPageChange={setCurrentE}
+              ></NewPagination>
+            </Box>
           </TabPanel>
           <TabPanel>
             <Flex justifyContent="center" wrap="wrap">
@@ -254,19 +149,21 @@ export default function Home() {
                     .fill('')
                     .map(() => <Card></Card>)}
             </Flex>
-            <Pagination
-              itemsCount={
-                posts[0]
-                  ? Object.keys(
-                      posts.filter((item) => item.category === 'Finance')
-                    ).length
-                  : 0
-              }
-              pageSize={9}
-              currentPage={currentF}
-              onPageChange={setCurrentF}
-              scroll={executeScroll}
-            ></Pagination>
+            <Box mt="20px" onClick={executeScroll}>
+              <NewPagination
+                total={
+                  posts[0]
+                    ? Math.ceil(
+                        Object.keys(
+                          posts.filter((item) => item.category === 'Finance')
+                        ).length / 9
+                      )
+                    : 0
+                }
+                current={currentF}
+                onPageChange={setCurrentF}
+              ></NewPagination>
+            </Box>
           </TabPanel>
           <TabPanel>
             <Flex justifyContent="center" wrap="wrap">
@@ -280,19 +177,23 @@ export default function Home() {
                     .fill('')
                     .map(() => <Card></Card>)}
             </Flex>
-            <Pagination
-              itemsCount={
-                posts[0]
-                  ? Object.keys(
-                      posts.filter((item) => item.category === 'Relationships')
-                    ).length
-                  : 0
-              }
-              pageSize={9}
-              currentPage={currentR}
-              onPageChange={setCurrentR}
-              scroll={executeScroll}
-            ></Pagination>
+            <Box mt="20px" onClick={executeScroll}>
+              <NewPagination
+                total={
+                  posts[0]
+                    ? Math.ceil(
+                        Object.keys(
+                          posts.filter(
+                            (item) => item.category === 'Relationships'
+                          )
+                        ).length / 9
+                      )
+                    : 0
+                }
+                current={currentR}
+                onPageChange={setCurrentR}
+              ></NewPagination>
+            </Box>
           </TabPanel>
           <TabPanel>
             <Flex justifyContent="center" wrap="wrap">
@@ -306,19 +207,21 @@ export default function Home() {
                     .fill('')
                     .map(() => <Card></Card>)}
             </Flex>
-            <Pagination
-              itemsCount={
-                posts[0]
-                  ? Object.keys(
-                      posts.filter((item) => item.category === 'Life')
-                    ).length
-                  : 0
-              }
-              pageSize={9}
-              currentPage={currentL}
-              onPageChange={setCurrentL}
-              scroll={executeScroll}
-            ></Pagination>
+            <Box mt="20px" onClick={executeScroll}>
+              <NewPagination
+                total={
+                  posts[0]
+                    ? Math.ceil(
+                        Object.keys(
+                          posts.filter((item) => item.category === 'Life')
+                        ).length / 9
+                      )
+                    : 0
+                }
+                current={currentL}
+                onPageChange={setCurrentL}
+              ></NewPagination>
+            </Box>
           </TabPanel>
         </TabPanels>
       </Tabs>

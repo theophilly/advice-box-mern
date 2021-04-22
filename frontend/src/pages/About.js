@@ -56,7 +56,7 @@ export default function About() {
             borderRadius="50%"
             h="350px"
             w="370px"
-            src="/kolade.png"
+            src="/kolade.jpg"
           ></Image>
 
           <Text

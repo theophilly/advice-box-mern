@@ -31,8 +31,8 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={About}></Route>
-        <Route path="/home" exact component={Home}></Route>
+        <Route path="/" exact component={Home}></Route>
+        <Route path="/about" exact component={About}></Route>
         <Route path="/dashboard/:userName" component={Dashboard}></Route>
       </Switch>
     </BrowserRouter>

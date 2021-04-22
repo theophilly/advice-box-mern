@@ -62,10 +62,21 @@ export default function Footer() {
           Links
         </Text>
         <Link to="/">
-          <Text mt="20px">Home</Text>
+          <Text
+            fontWeight={{ base: 'bold', sm: 'normal' }}
+            mt="20px"
+            _hover={{ color: '#3182CE' }}
+          >
+            Home
+          </Text>
         </Link>
         <Link to="/about">
-          <Text>About</Text>
+          <Text
+            _hover={{ color: '#3182CE' }}
+            fontWeight={{ base: 'bold', sm: 'normal' }}
+          >
+            About
+          </Text>
         </Link>
       </Box>
     </Box>
