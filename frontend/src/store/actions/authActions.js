@@ -6,7 +6,7 @@ export const login = (user) => {
     dispatch({ type: actionType.LOGIN_BEGIN });
 
     await axios
-      .post('/user/signin', { ...user })
+      .post('/api/user/signin', { ...user })
       .then((res) => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
@@ -33,7 +33,7 @@ export const signUp = (user) => {
     dispatch({ type: actionType.LOGIN_BEGIN });
 
     await axios
-      .post('/user/signup', { ...user })
+      .post('/api/user/signup', { ...user })
       .then((res) => {
         dispatch({
           type: actionType.ON_LOGIN_SUCCESS,
@@ -71,7 +71,7 @@ export const updateUser = (form) => {
 
   return async (dispatch) => {
     await axios
-      .post('/user/updateuser', form)
+      .post('/api/user/updateuser', form)
       .then((res) => {
         dispatch({
           type: actionType.ON_UPDATE_SUCCESS,

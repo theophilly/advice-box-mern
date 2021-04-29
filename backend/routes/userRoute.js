@@ -31,7 +31,9 @@ route.post('/signin', signUpValidator, async (req, res) => {
       message: result.array()[0].msg,
     });
   }
-  const { userName, password } = req.body;
+  const { userName: username, password } = req.body;
+
+  let userName = username.toLowerCase();
 
   try {
     const user = await User.findOne({ userName });
@@ -145,7 +147,9 @@ route.post('/signup', signUpValidator, async (req, res) => {
     });
   }
 
-  const { userName, password } = req.body;
+  const { userName: username, password } = req.body;
+
+  let userName = username.toLowerCase();
 
   try {
     const user = await User.findOne({ userName });

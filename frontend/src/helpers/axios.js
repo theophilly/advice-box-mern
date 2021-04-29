@@ -26,10 +26,13 @@ const verifyToken = async () => {
 };
 
 const axiosInstance = axios.create({
-  baseURL: 'http://127.0.0.1:5000/api',
   headers: {
     'Content-Type': 'application/json',
     'Accept': '*/*',
+  },
+  proxy: {
+    host: '127.0.0.1',
+    port: 5000,
   },
 });
 
@@ -53,11 +56,11 @@ axiosInstance.interceptors.request.use(async (req) => {
     }
   } else {
     if (
-      req.url == '/user/signin' ||
-      req.url == '/user/signup' ||
-      req.url == '/advice/get-all-advice' ||
-      req.url == '/receivemail' ||
-      req.url == '/user/getuser/:userName'
+      req.url == '/api/user/signin' ||
+      req.url == '/api/user/signup' ||
+      req.url == '/api/api/advice/get-all-advice' ||
+      req.url == '/api/receivemail' ||
+      req.url == '/api/user/getuser/:userName'
     ) {
       return req;
     }

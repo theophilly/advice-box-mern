@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+import {
+  List,
+  Box,
+  Icon,
+  ListIcon,
+  OrderedList,
+  UnorderedList,
+} from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons';
+
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 import { logout } from '../store/actions/authActions';
@@ -21,28 +31,40 @@ export default function Header() {
         </div>
       </NavLink>
       <div className="links">
+        {/* <Icon as={HamburgerIcon} /> */}
+
         {showLinks ? (
-          <>
-            <NavLink
-              className="navlink"
-              to={
-                state.user && state.user.userName
-                  ? `/dashboard/${state.user.userName}`
-                  : `#`
-              }
-            >
-              <i class="fas fa-laptop-house"></i>
-              Dashboard
-            </NavLink>
-            <NavLink
-              onClick={() => dispatch(logout())}
-              className="navlink"
-              to="#"
-            >
-              <i style={{ color: 'red' }} class="fas fa-power-off"></i>
-              Sign Out
-            </NavLink>
-          </>
+          <ul className="globalist">
+            <li>
+              <Link to="/about">
+                <span>About</span>
+              </Link>
+            </li>
+            <li>
+              <i class="fas fa-user"></i> <span>theodasa</span>{' '}
+              <i class="fas fa-caret-down"></i>
+              <ul>
+                <li className="navlink">
+                  <NavLink
+                    to={
+                      state.user && state.user.userName
+                        ? `/dashboard/${state.user.userName}`
+                        : `#`
+                    }
+                  >
+                    <i class="fas fa-laptop-house"></i>
+                    Dashboard
+                  </NavLink>
+                </li>
+                <li className="navlink">
+                  <NavLink onClick={() => dispatch(logout())} to="#">
+                    <i style={{ color: 'red' }} class="fas fa-power-off"></i>
+                    Sign Out
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
+          </ul>
         ) : (
           <>
             <SignIn /> <SignUp />

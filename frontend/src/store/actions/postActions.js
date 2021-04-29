@@ -13,7 +13,7 @@ export const createAdvice = (advice) => {
   return async (dispatch) => {
     let posts = null;
     try {
-      posts = await axios.post('/advice/create-advice', { ...advice });
+      posts = await axios.post('/api/advice/create-advice', { ...advice });
       if (posts) {
         dispatch({
           type: actionTypes.ON_FETCH_SUCCESS,
@@ -38,7 +38,7 @@ export const updateAdvice = (advice) => {
   return async (dispatch) => {
     let post = null;
     try {
-      post = await axios.put(`/advice/update/${advice._id}`, { ...advice });
+      post = await axios.put(`/api/advice/update/${advice._id}`, { ...advice });
     } catch (error) {
       console.log(error.response.data.message);
     }
@@ -65,7 +65,7 @@ export const deleteAdvice = (_id) => {
     dispatch({ type: actionTypes.FETCH_BEGIN });
     let post;
     try {
-      post = await axios.delete(`/advice/delete/${_id}`);
+      post = await axios.delete(`/api/advice/delete/${_id}`);
     } catch (error) {
       console.log(error);
     }
@@ -85,7 +85,7 @@ export const getAllAdvice = () => {
   return async (dispatch) => {
     let post = null;
     try {
-      post = await axios.get('/advice/get-all-advice');
+      post = await newAxios.get('/api/advice/get-all-advice');
       if (post) {
         dispatch({
           type: actionTypes.ON_FETCH_SUCCESS,
@@ -103,7 +103,7 @@ export const sendMail = (mail) => {
   let post;
   return async (dispatch) => {
     try {
-      post = await axios.post('/receivemail', mail);
+      post = await axios.post('/api/receivemail', mail);
       console.log(post);
       if (post.status == 200) {
         dispatch({
