@@ -17,12 +17,21 @@ import { logout } from '../store/actions/authActions';
 
 export default function Header() {
   const [showLinks, setShowLinks] = useState(true);
+  const [active, setActive] = useState('');
   const state = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   useEffect(() => {
     setShowLinks(state.authenticated);
     console.log(state.authenticated);
   }, [state.authenticated]);
+
+  const setActiveController = () => {
+    if (active === '') {
+      setActive('active');
+    } else {
+      setActive('');
+    }
+  };
   return (
     <nav>
       <NavLink to="/">
@@ -31,7 +40,10 @@ export default function Header() {
         </div>
       </NavLink>
       <div className="links">
-        {/* <Icon as={HamburgerIcon} /> */}
+        <i
+          onClick={() => setActiveController()}
+          className={`fas fa-bars ${active}`}
+        ></i>
 
         {showLinks ? (
           <ul className="globalist">

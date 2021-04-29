@@ -31,7 +31,7 @@ export default function SignIn() {
 
   return (
     <>
-      <NavLink className="navlink" to="#" ref={btnRef} onClick={onOpen}>
+      <NavLink className="newnavlink" to="#" ref={btnRef} onClick={onOpen}>
         <i className="fas fa-sign-in-alt"></i>
         Sign In
       </NavLink>

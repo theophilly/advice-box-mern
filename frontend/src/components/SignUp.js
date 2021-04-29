@@ -32,7 +32,7 @@ export default function SignUp() {
 
   return (
     <>
-      <NavLink className="navlink" to="#" ref={btnRef} onClick={onOpen}>
+      <NavLink className="newnavlink" to="#" ref={btnRef} onClick={onOpen}>
         <i className="fas fa-user-plus"></i>
         Sign Up
       </NavLink>

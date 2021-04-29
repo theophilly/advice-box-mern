@@ -22,9 +22,21 @@ nav {
     display: flex;
     align-items: center;
 
+    & > i {
+      display: none;
+
+      @media Screen and (max-width: 700px) {
+        display: block;
+      }
+    }
+
     .globalist {
       display: flex;
       list-style-type: none;
+
+      @media Screen and (max-width: 700px) {
+        display: none;
+      }
 
       & > li {
         position: relative;
@@ -90,5 +102,19 @@ nav {
 
   @media Screen and (max-width: 1200px) {
     padding: 0 10px;
+  }
+}
+
+.newnavlink {
+  padding: 5px;
+  width: '100%';
+
+  i {
+    color: #556ee6;
+    margin-right: 2px;
+  }
+
+  &:hover {
+    color: #556ee6;
   }
 }

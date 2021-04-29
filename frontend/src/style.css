@@ -35,11 +35,27 @@ nav .links {
           align-items: center;
 }
 
+nav .links > i {
+  display: none;
+}
+
+@media Screen and (max-width: 700px) {
+  nav .links > i {
+    display: block;
+  }
+}
+
 nav .links .globalist {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   list-style-type: none;
+}
+
+@media Screen and (max-width: 700px) {
+  nav .links .globalist {
+    display: none;
+  }
 }
 
 nav .links .globalist > li {
@@ -106,6 +122,20 @@ nav .links .globalist > li:hover ul {
   nav {
     padding: 0 10px;
   }
+}
+
+.newnavlink {
+  padding: 5px;
+  width: '100%';
+}
+
+.newnavlink i {
+  color: #556ee6;
+  margin-right: 2px;
+}
+
+.newnavlink:hover {
+  color: #556ee6;
 }
 
 * {
