@@ -1,27 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  Flex,
-  Box,
-  Text,
-  Icon,
-  Tag,
-  Button,
-  useDisclosure,
-  useToast,
-  FormErrorMessage,
-  FormControl,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Input,
-  Textarea,
-  Spacer,
-} from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 import Lottie from 'react-lottie';
 import { AiOutlineReload } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
@@ -49,7 +27,7 @@ export default function NotFound() {
       <Lottie options={defaultOptions} />
 
       <Box mt="4">
-        <Link to="/home">
+        <Link to="/">
           <Button size="sm" rightIcon={<AiOutlineReload />} colorScheme="blue">
             Go Home
           </Button>

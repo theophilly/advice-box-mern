@@ -70,6 +70,7 @@ export default function Board() {
         <Box mt="20px" minW="30%">
           <Box display="flex">
             <Button
+              size="sm"
               onClick={addAdvice}
               leftIcon={<AddIcon />}
               colorScheme="blue"

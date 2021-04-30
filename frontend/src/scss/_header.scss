@@ -1,3 +1,11 @@
+.logo {
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+.logo span {
+  color: #556ee6;
+}
+
 nav {
   color: lighten($color: #000000, $amount: 20);
   display: flex;
@@ -7,114 +15,151 @@ nav {
   align-items: center;
   font-family: 'Poppins', sans-serif;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
 
+nav .links {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1rem;
+}
+nav .links ul {
+  list-style-type: none;
+
+  list-style-type: none;
+  border-radius: 2px;
+  position: absolute;
+  display: none;
+  top: 20x;
+  right: 0;
+  width: 150px;
+  box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.4);
+}
+nav .links ul li {
+  padding: 4px 10px;
+}
+nav .links ul li:hover {
+  background: #556ee6;
+  color: white;
+}
+nav .links ul li:hover .navlink i {
+  color: white;
+}
+nav .links .item:hover ul {
+  display: block;
+}
+nav .links input {
+  display: none;
+}
+nav .links .multilevel .item i {
+  color: #556ee6;
+  margin-right: 3px;
+}
+nav .links .multilevel .item {
+  position: relative;
+}
+.links .multilevel .item label {
+  margin-right: 20px;
+  font-weight: 400;
+  cursor: pointer;
+}
+.links .multilevel .item label:hover {
+  color: #556ee6;
+}
+nav .links .multilevel {
+  display: flex;
+}
+nav .links .menu {
+  display: none;
+}
+
+@media screen and (max-width: '700px') {
   .logo {
     font-weight: 500;
     font-size: 1.3rem;
-
-    span {
-      color: #556ee6;
-    }
+  }
+  .logo span {
+    color: #556ee6;
   }
 
-  .links {
-    font-family: 'Roboto', sans-serif;
+  nav {
+    color: lighten($color: #000000, $amount: 20);
     display: flex;
+    justify-content: space-between;
+    padding: 0px 10px;
+    height: 11vh;
     align-items: center;
-
-    & > i {
-      display: none;
-
-      @media Screen and (max-width: 700px) {
-        display: block;
-      }
-    }
-
-    .globalist {
-      display: flex;
-      list-style-type: none;
-
-      @media Screen and (max-width: 700px) {
-        display: none;
-      }
-
-      & > li {
-        position: relative;
-        margin-right: 20px;
-        font-size: 1rem;
-        cursor: pointer;
-
-        &:hover span {
-          color: rgb(85, 104, 109);
-        }
-        & span {
-          font-weight: 500;
-        }
-        & > i {
-          color: #556ee6;
-        }
-
-        ul {
-          list-style-type: none;
-          position: absolute;
-          display: none;
-          top: 20x;
-          left: 0;
-          width: 150px;
-          box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.4);
-          -webkit-box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.4);
-          -moz-box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.4);
-
-          .navlink {
-            padding: 5px;
-            width: '100%';
-
-            i {
-              color: #556ee6;
-              margin-right: 2px;
-            }
-
-            &:hover {
-              background: #556ee6;
-              color: white;
-
-              i {
-                color: white;
-              }
-            }
-          }
-        }
-
-        &:hover {
-          ul {
-            display: block;
-          }
-        }
-      }
-    }
-
-    @media Screen and (max-width: 440px) {
-      .navlink {
-        margin-left: 5px;
-      }
-    }
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   }
 
-  @media Screen and (max-width: 1200px) {
-    padding: 0 10px;
+  nav .links {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1rem;
+    align-items: center;
   }
-}
 
-.newnavlink {
-  padding: 5px;
-  width: '100%';
+  nav .links ul {
+    position: static;
+    width: 100vw;
+    list-style-type: none;
+    display: none;
+    box-shadow: none;
+  }
+  nav .links label {
+    font-weight: 500;
+  }
+  nav .links .menu {
+    display: block;
+  }
+  nav .links .item:hover ul {
+    display: none;
+  }
+  nav .links input {
+    display: none;
+  }
+  nav .links .multilevel {
+    display: block;
+    position: absolute;
+    width: 100%;
+    min-width: 100vw;
+    background: white;
+    top: 11vh;
+    z-index: 1;
+    left: 0;
+    max-height: 0px;
+    overflow: hidden;
+    transition: all ease-in-out 0.9s;
+  }
 
-  i {
+  nav .links .multilevel .item {
+    padding: 10px 20px;
+    width: '100%';
+  }
+  nav .links .multilevel .item li {
+    padding: 10px;
+    width: '100%';
+  }
+
+  .links .multilevel .item .navlink i {
     color: #556ee6;
     margin-right: 2px;
   }
-
-  &:hover {
+  .links .multilevel .item .navlink:hover {
     color: #556ee6;
+  }
+
+  nav .links ul li:hover {
+    background: none;
+    color: black;
+  }
+  nav .links ul li:hover .navlink i {
+    color: none;
+  }
+
+  nav .links #menu:checked ~ .multilevel,
+  .item input[type='checkbox']:checked + ul {
+    min-height: 100%;
+    display: block;
   }
 }

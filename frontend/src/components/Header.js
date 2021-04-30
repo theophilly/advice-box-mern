@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, Link } from 'react-router-dom';
-import {
-  List,
-  Box,
-  Icon,
-  ListIcon,
-  OrderedList,
-  UnorderedList,
-} from '@chakra-ui/react';
-import { HamburgerIcon } from '@chakra-ui/icons';
+import { NavLink } from 'react-router-dom';
 
 import SignUp from './SignUp';
 import SignIn from './SignIn';
@@ -17,21 +8,12 @@ import { logout } from '../store/actions/authActions';
 
 export default function Header() {
   const [showLinks, setShowLinks] = useState(true);
-  const [active, setActive] = useState('');
   const state = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   useEffect(() => {
     setShowLinks(state.authenticated);
     console.log(state.authenticated);
   }, [state.authenticated]);
-
-  const setActiveController = () => {
-    if (active === '') {
-      setActive('active');
-    } else {
-      setActive('');
-    }
-  };
   return (
     <nav>
       <NavLink to="/">
@@ -40,24 +22,31 @@ export default function Header() {
         </div>
       </NavLink>
       <div className="links">
-        <i
-          onClick={() => setActiveController()}
-          className={`fas fa-bars ${active}`}
-        ></i>
+        <label className="menu" for="menu">
+          <i class="fas fa-bars" />
+        </label>
+        <input type="checkbox" id="menu"></input>
 
         {showLinks ? (
-          <ul className="globalist">
-            <li>
-              <Link to="/about">
-                <span>About</span>
-              </Link>
-            </li>
-            <li>
-              <i class="fas fa-user"></i> <span>theodasa</span>{' '}
-              <i class="fas fa-caret-down"></i>
+          <div className="multilevel">
+            <div className="item">
+              <input type="checkbox" id="A"></input>
+              <label for="A">
+                <i class="far fa-address-card"></i>
+                <NavLink to="/about">about</NavLink>
+              </label>
+            </div>
+            <div className="item">
+              <label for="B">
+                <i class="fas fa-user" />
+                {state.authenticated && state.user.userName}
+                <i class="fas fa-caret-down"></i>
+              </label>
+              <input type="checkbox" id="B"></input>
               <ul>
-                <li className="navlink">
+                <li>
                   <NavLink
+                    className="navlink"
                     to={
                       state.user && state.user.userName
                         ? `/dashboard/${state.user.userName}`
@@ -68,19 +57,41 @@ export default function Header() {
                     Dashboard
                   </NavLink>
                 </li>
-                <li className="navlink">
-                  <NavLink onClick={() => dispatch(logout())} to="#">
+                <li>
+                  <NavLink
+                    onClick={() => dispatch(logout())}
+                    className="navlink"
+                    to="#"
+                  >
                     <i style={{ color: 'red' }} class="fas fa-power-off"></i>
                     Sign Out
                   </NavLink>
                 </li>
               </ul>
-            </li>
-          </ul>
+            </div>
+          </div>
         ) : (
-          <>
-            <SignIn /> <SignUp />
-          </>
+          <div className="multilevel">
+            <div className="item">
+              <input type="checkbox" id="A"></input>
+              <label for="A">
+                <SignIn />
+              </label>
+            </div>
+            <div className="item">
+              <input type="checkbox" id="B"></input>
+              <label for="B">
+                <SignUp />
+              </label>
+            </div>
+            <div className="item">
+              <input type="checkbox" id="C"></input>
+              <label for="C">
+                <i class="far fa-address-card"></i>
+                <NavLink to="/about">about</NavLink>
+              </label>
+            </div>
+          </div>
         )}
       </div>
     </nav>

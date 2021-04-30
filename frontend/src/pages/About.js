@@ -298,7 +298,7 @@ export default function About() {
                               {...formik.getFieldProps('email')}
                               name="email"
                               id="email"
-                              placeholder="email"
+                              placeholder="your email to receive reply"
                               mb="6px"
                             ></Input>
                             <FormErrorMessage>
@@ -338,7 +338,7 @@ export default function About() {
                           colorScheme="blue"
                           mr={3}
                         >
-                          Give Advice
+                          Send
                         </Button>
                         <Button onClick={onClose}>Cancel</Button>
                       </ModalFooter>
