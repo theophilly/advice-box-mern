@@ -40,11 +40,9 @@ axiosInstance.interceptors.request.use(async (req) => {
   const { authReducer } = store.getState();
 
   if (authReducer.token) {
-    console.log('pritt this');
     const decodeToken = jwt_decode(authReducer.token);
     const expiresIn = new Date(decodeToken.exp * 1000);
-    console.log(new Date());
-    console.log(expiresIn);
+
     if (new Date() > expiresIn) {
       localStorage.clear();
 

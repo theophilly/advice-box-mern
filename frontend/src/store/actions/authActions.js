@@ -58,7 +58,6 @@ export const signUp = (user) => {
 export const logout = () => {
   localStorage.clear();
   return async (dispatch) => {
-    console.log('okay');
     dispatch({ type: actionType.SIGN_OUT });
   };
 };

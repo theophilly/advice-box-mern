@@ -4,7 +4,6 @@ import newAxios from 'axios';
 
 export const createAdvice = (advice) => {
   let token = localStorage.getItem('token');
-  console.log(advice);
 
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -22,9 +21,7 @@ export const createAdvice = (advice) => {
           },
         });
       }
-    } catch (error) {
-      console.log(error.response.data.message);
-    }
+    } catch (error) {}
   };
 };
 
@@ -66,9 +63,7 @@ export const deleteAdvice = (_id) => {
     let post;
     try {
       post = await axios.delete(`/api/advice/delete/${_id}`);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
 
     if (post) {
       await dispatch({
@@ -94,9 +89,7 @@ export const getAllAdvice = () => {
           },
         });
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 };
 export const sendMail = (mail) => {
@@ -104,7 +97,7 @@ export const sendMail = (mail) => {
   return async (dispatch) => {
     try {
       post = await axios.post('/api/receivemail', mail);
-      console.log(post);
+
       if (post.status == 200) {
         dispatch({
           type: actionTypes.MAIL_SUCCESS,
@@ -127,7 +120,6 @@ export const sendMail = (mail) => {
           error: 'something went wrong',
         },
       });
-      console.log(error);
     }
   };
 };

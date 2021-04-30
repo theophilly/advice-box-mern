@@ -56,14 +56,7 @@ app.get('/api/advice', async (req, res) => {
     ],
   });
 
-  const ewcategories = await m.save();
-  console.log(ewcategories);
 
-  // const m = await Category.find({});
-  // console.log(m);
-
-  // return res.status(200).json({ m, message: 'retrieved' });
-});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log('app running on port 5000'));

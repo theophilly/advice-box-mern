@@ -56,7 +56,6 @@ export default function Dashboard() {
 
     checkNetwork
       .then((res) => {
-        console.log(res.status);
         const getUser = async (userUsername) => {
           let fecthedUser = await axios.get(
             `http://127.0.0.1:5000/api/user/getuser/${userUsername}`
@@ -70,7 +69,6 @@ export default function Dashboard() {
           .catch((error) =>
             setProfile({ ...profile, loading: false, error: true })
           );
-        console.log(profile);
       })
       .catch((err) => {
         setProfile({

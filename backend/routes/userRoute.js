@@ -124,7 +124,6 @@ route.post(
           fs.unlinkSync(
             path.join(path.resolve(), 'frontend', 'public', deletePicture)
           );
-          console.log('Successfully deleted the file.');
         } catch (err) {
           return res.status(400).json({
             message: 'something went wrong',

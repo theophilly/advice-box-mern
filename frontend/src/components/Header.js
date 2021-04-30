@@ -12,7 +12,6 @@ export default function Header() {
   const dispatch = useDispatch();
   useEffect(() => {
     setShowLinks(state.authenticated);
-    console.log(state.authenticated);
   }, [state.authenticated]);
   return (
     <nav>
@@ -32,8 +31,10 @@ export default function Header() {
             <div className="item">
               <input type="checkbox" id="A"></input>
               <label for="A">
-                <i class="far fa-address-card"></i>
-                <NavLink to="/about">about</NavLink>
+                <NavLink to="/about">
+                  <i class="far fa-address-card"></i>
+                  about
+                </NavLink>
               </label>
             </div>
             <div className="item">

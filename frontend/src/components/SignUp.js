@@ -81,7 +81,6 @@ export default function SignUp() {
                     actions.setSubmitting(false);
                     onClose();
                   } else {
-                    console.log(state.error);
                     toast({
                       title: 'Error',
                       description: window.store.getState().authReducer.error,
