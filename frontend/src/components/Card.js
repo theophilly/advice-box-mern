@@ -90,6 +90,14 @@ export const Card = ({
       await dispatch(deleteAdvice(_id));
       setIsAlertOpen(false);
       onClose();
+      toast({
+        title: 'success',
+        description: 'Advice Deleted',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+        position: 'top',
+      });
     } catch (error) {
       setIsAlertOpen(false);
       onClose();
@@ -115,13 +123,6 @@ export const Card = ({
     { key: 'Life', value: 'Life' },
     { key: 'Finance', value: 'Finance' },
   ];
-
-  const handleDelete = () => {
-    const confirm = window.confirm('Are you sure you want to delete this?');
-    if (confirm) {
-      onClose();
-    }
-  };
 
   return content ? (
     <Box
@@ -222,6 +223,14 @@ export const Card = ({
                   await dispatch(updateAdvice({ ...values, _id }));
                   actions.setSubmitting(false);
                   onClose();
+                  toast({
+                    title: 'success',
+                    description: 'advice updated successfully',
+                    status: 'success',
+                    duration: 2000,
+                    isClosable: true,
+                    position: 'top',
+                  });
                 } catch (error) {
                   actions.setSubmitting(false);
                   onClose();
