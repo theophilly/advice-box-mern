@@ -1,27 +1,31 @@
 import express from 'express';
+import aws from 'aws-sdk';
 import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import multer from 'multer';
+import multerS3 from 'multer-s3';
 import shortid from 'shortid';
-import path from 'path';
-import fs from 'fs';
 
 import User from '../models/userModel.js';
 import { signUpValidator } from '../validators/index.js';
 import { ensureLogin, userLoginMiddleware } from '../middlewares/auth.js';
 
 const route = express.Router();
+aws.config.update({ region: 'us-west-2' });
+const s3 = new aws.S3({ apiVersion: '2006-03-01' });
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.resolve(path.resolve(), 'frontend', 'public'));
-  },
-  filename: function (req, file, cb) {
-    cb(null, shortid.generate() + '-' + file.originalname);
-  },
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'advicebox',
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: 'file' });
+    },
+    key: function (req, file, cb) {
+      cb(null, shortid.generate() + '-' + file.originalname);
+    },
+  }),
 });
-
-const upload = multer({ storage });
 
 route.post('/signin', signUpValidator, async (req, res) => {
   const result = validationResult(req);
@@ -92,6 +96,8 @@ route.post(
   userLoginMiddleware,
   upload.single('file'),
   async (req, res) => {
+    console.log(req.file);
+
     let user = null;
 
     try {
@@ -109,7 +115,7 @@ route.post(
       try {
         await user.set({
           about: req.body.about,
-          profilePicture: req.file.filename,
+          profilePicture: req.file.key,
         });
         await user.save();
       } catch (error) {
@@ -119,10 +125,15 @@ route.post(
         });
       }
 
-      if (deletePicture !== '' && deletePicture !== req.file.filename) {
+      if (deletePicture !== '' && deletePicture !== req.file.key) {
         try {
-          fs.unlinkSync(
-            path.join(path.resolve(), 'frontend', 'public', deletePicture)
+          await s3.deleteObject(
+            { Bucket: 'advicebox', Key: deletePicture },
+            function (err, data) {
+              if (err) console.log(err, err.stack);
+              // an error occurred
+              else console.log(data); //   successful response
+            }
           );
         } catch (err) {
           return res.status(400).json({

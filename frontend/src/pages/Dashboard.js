@@ -370,7 +370,11 @@ export default function Dashboard() {
                       <Avatar
                         size="2xl"
                         name={profile.userName}
-                        src={`/${profile.profilePicture}`}
+                        src={
+                          profile.profilePicture
+                            ? `https://advicebox.s3.us-east-2.amazonaws.com/${profile.profilePicture}`
+                            : ''
+                        }
                       />
                     </WrapItem>
                     <Text

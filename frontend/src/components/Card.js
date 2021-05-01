@@ -145,7 +145,11 @@ export const Card = ({
               height="25px"
               width="25px"
               name={userName}
-              src={`/${profile.profilePicture}`}
+              src={
+                profile.profilePicture
+                  ? `https://advicebox.s3.us-east-2.amazonaws.com/${profile.profilePicture}`
+                  : ''
+              }
             />
             <Text
               color={() => {
