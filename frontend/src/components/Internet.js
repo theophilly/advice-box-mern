@@ -1,28 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  Flex,
-  Box,
-  Text,
-  Icon,
-  Tag,
-  Button,
-  useDisclosure,
-  useToast,
-  Link,
-  FormErrorMessage,
-  FormControl,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Input,
-  Textarea,
-  Spacer,
-} from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 import Lottie from 'react-lottie';
 import { AiOutlineReload } from 'react-icons/ai';
 

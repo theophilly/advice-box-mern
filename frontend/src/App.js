@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import Home from './pages/Home';
 import { getAllAdvice } from './store/actions/postActions';
 import Dashboard from './pages/Dashboard';
-import { login } from './store/actions/authActions';
 import { ON_LOGIN_SUCCESS } from './store/actionTypes/authActionsTypes';
 import About from './pages/About';
 

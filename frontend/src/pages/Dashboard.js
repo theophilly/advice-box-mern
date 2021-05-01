@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { Redirect, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Lottie from 'react-lottie';
 import NewPagination from 'react-responsive-pagination';
 import * as Yup from 'yup';
@@ -23,7 +23,7 @@ import {
   FormHelperText,
   Badge,
 } from '@chakra-ui/react';
-import { EditIcon, SettingsIcon } from '@chakra-ui/icons';
+import { SettingsIcon } from '@chakra-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { Card } from '../components/Card';
 import axios from 'axios';
@@ -84,7 +84,7 @@ export default function Dashboard() {
           });
         });
     }
-  }, [userName, reloadProfile]);
+  }, [userName, reloadProfile, profile]);
 
   const getNetworkStatus = async () => {
     let result = fetch(

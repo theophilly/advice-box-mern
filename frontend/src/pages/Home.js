@@ -11,18 +11,13 @@ import {
   TabPanel,
   Box,
   Flex,
-  Divider,
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
 } from '@chakra-ui/react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Layout from '../components/layout';
 
 import Board from '../components/Board';
 import { Card } from '../components/Card';
-import { getAllAdvice } from '../store/actions/postActions';
-import Pagination from '../components/Pagination';
+
 import paginate from '../helpers/paginate';
 
 export default function Home() {

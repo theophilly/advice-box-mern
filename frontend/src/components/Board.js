@@ -11,7 +11,6 @@ import {
   Textarea,
   Select,
   Button,
-  Text,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -221,33 +220,4 @@ export default function Board() {
       </Modal>
     </Box>
   );
-}
-
-{
-  /* <Box display="flex" justifyContent="flex-end" minW="70%">
-          <Box px="50px" py="30px" bg="#dbf9ea" width="60%">
-            <Text
-              color="#288855"
-              fontWeight="bold"
-              fontFamily="font-family: 'Inter', sans-serif"
-            >
-              A litle About this App
-            </Text>
-            <OrderedList mt="20px">
-              <ListItem>
-                Lorem ipsum dolor sit ametClick on login Use the "Forgot
-                Password"
-              </ListItem>
-              <ListItem>Consectetur adipiscing elitOption Enter</ListItem>
-              <ListItem>
-                Integer moles and follow the instructions to reset your ptie
-                lorem at massa
-              </ListItem>
-              <ListItem>
-                Facilisis in pretium nisword, please login to update your recl
-                aliquet
-              </ListItem>
-            </OrderedList>
-          </Box>
-        </Box> */
 }

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   useDisclosure,
   Button,
@@ -25,7 +25,6 @@ export default function SignUp() {
   const btnRef = React.useRef();
   const toast = useToast();
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.authReducer);
 
   return (
     <>

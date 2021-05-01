@@ -16,7 +16,7 @@ export default function Pagination({
     scroll();
   };
 
-  if (Math.ceil(itemsCount / pageSize) == 1) return null;
+  if (Math.ceil(itemsCount / pageSize) === 1) return null;
   return (
     <ButtonGroup
       mt="20px"
@@ -27,7 +27,7 @@ export default function Pagination({
       {pages.map((page) => (
         <Button
           onClick={() => handleClick(page)}
-          colorScheme={page == currentPage ? 'blue' : 'gray'}
+          colorScheme={page === currentPage ? 'blue' : 'gray'}
           mr="-px"
           _focus={{
             border: 'none',

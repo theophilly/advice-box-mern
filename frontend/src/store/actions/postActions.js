@@ -98,7 +98,7 @@ export const sendMail = (mail) => {
     try {
       post = await axios.post('/api/receivemail', mail);
 
-      if (post.status == 200) {
+      if (post.status === 200) {
         dispatch({
           type: actionTypes.MAIL_SUCCESS,
           payload: {

@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import {
   Box,
-  Wrap,
   Text,
   Flex,
   Avatar,
@@ -78,7 +77,7 @@ export const Card = ({
       };
       getUser(userName).then(({ data: { user } }) => setProfile({ ...user }));
     }
-  }, []);
+  }, [userName]);
 
   const initialRef = React.useRef();
   const finalRef = React.useRef();
