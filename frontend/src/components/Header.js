@@ -8,11 +8,20 @@ import { logout } from '../store/actions/authActions';
 
 export default function Header() {
   const [showLinks, setShowLinks] = useState(true);
+  const [active, setActive] = useState('');
   const state = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   useEffect(() => {
     setShowLinks(state.authenticated);
   }, [state.authenticated]);
+
+  const setActiveToggle = () => {
+    if (active === '') {
+      setActive('active');
+    } else {
+      setActive('');
+    }
+  };
   return (
     <nav>
       <NavLink to="/">
@@ -21,8 +30,12 @@ export default function Header() {
         </div>
       </NavLink>
       <div className="links">
-        <label className="menu" for="menu">
-          <i class="fas fa-bars" />
+        <label onClick={setActiveToggle} className="menu" for="menu">
+          <div id="toggle" class={`menu-toggle ${active}`}>
+            <span class="menu-icon"></span>
+            <span class="menu-icon"></span>
+            <span class="menu-icon"></span>
+          </div>
         </label>
         <input type="checkbox" id="menu"></input>
 

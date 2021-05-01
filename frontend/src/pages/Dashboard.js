@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Redirect, useParams } from 'react-router-dom';
 import Lottie from 'react-lottie';
+import NewPagination from 'react-responsive-pagination';
 import * as Yup from 'yup';
-import Layout from '../components/layout';
 import {
   Text,
   Box,
@@ -31,6 +31,8 @@ import { updateUser } from '../store/actions/authActions';
 import loader from '../components/loader.json';
 import Internet from '../components/Internet';
 import NotFound from '../components/NotFound';
+import Layout from '../components/layout';
+import paginate from '../helpers/paginate';
 
 export default function Dashboard() {
   const {
@@ -39,6 +41,8 @@ export default function Dashboard() {
   } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
+  const [currentA, setCurrentA] = useState(1);
+  const myRef = useRef(null);
   const toast = useToast();
   const [reloadProfile, setReloadProfile] = useState(0);
   let { userName } = useParams();
@@ -88,6 +92,10 @@ export default function Dashboard() {
       }
     );
     return result;
+  };
+
+  const executeScroll = () => {
+    myRef.current.scrollIntoView();
   };
 
   const defaultOptions = {
@@ -398,6 +406,7 @@ export default function Dashboard() {
 
               <Box width="300px" ml={{ md: '20px' }} flex={{ md: '0.7' }}>
                 <Box
+                  ref={myRef}
                   borderBottom="2px solid #E1E5EB"
                   p="15px 10px"
                   d="flex"
@@ -423,13 +432,38 @@ export default function Dashboard() {
 
                 <Flex mt="10px" justifyContent="center" wrap="wrap">
                   {posts[0]
-                    ? posts
-                        .filter((item) => item.userName === profile.userName)
-                        .map((item) => <Card {...item}></Card>)
+                    ? paginate(
+                        posts.filter(
+                          (item) => item.userName === profile.userName
+                        ),
+                        currentA,
+                        10
+                      ).map((item) => <Card {...item}></Card>)
                     : Array(13)
                         .fill('')
                         .map(() => <Card></Card>)}
                 </Flex>
+                {Object.keys(
+                  posts.filter((item) => item.userName === profile.userName)
+                ).length > 10 && (
+                  <Box mt="20px" onClick={executeScroll}>
+                    <NewPagination
+                      total={
+                        posts[0]
+                          ? Math.ceil(
+                              Object.keys(
+                                posts.filter(
+                                  (item) => item.userName === profile.userName
+                                )
+                              ).length / 10
+                            )
+                          : 0
+                      }
+                      current={currentA}
+                      onPageChange={setCurrentA}
+                    ></NewPagination>
+                  </Box>
+                )}
               </Box>
             </Flex>
           </>

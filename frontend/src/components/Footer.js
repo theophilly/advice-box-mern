@@ -1,24 +1,6 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import {
-  Text,
-  Box,
-  Flex,
-  WrapItem,
-  Avatar,
-  Spacer,
-  FormControl,
-  Textarea,
-  Button,
-  FormLabel,
-  Center,
-  useToast,
-  Input,
-  FormErrorMessage,
-  FormHelperText,
-  Badge,
-} from '@chakra-ui/react';
-import { EditIcon, SettingsIcon } from '@chakra-ui/icons';
+import { Text, Box } from '@chakra-ui/react';
 
 export default function Footer() {
   return (
@@ -58,13 +40,14 @@ export default function Footer() {
           fontFamily="Poppins, sans-serif"
           fontSize="1.3rem"
           fontWeight="500"
+          mt={{ base: '20px', md: '0px' }}
         >
           Links
         </Text>
         <Link to="/">
           <Text
-            fontWeight={{ base: 'bold', sm: 'normal' }}
-            mt="20px"
+            fontWeight={{ base: 'normal', sm: 'normal' }}
+            mt={{ base: '10px', md: '20px' }}
             _hover={{ color: '#3182CE' }}
           >
             Home
@@ -73,7 +56,7 @@ export default function Footer() {
         <Link to="/about">
           <Text
             _hover={{ color: '#3182CE' }}
-            fontWeight={{ base: 'bold', sm: 'normal' }}
+            fontWeight={{ base: 'normal', sm: 'normal' }}
           >
             About
           </Text>

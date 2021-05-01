@@ -168,6 +168,9 @@ export const Card = ({
                   '.my-box:hover &': {
                     display: 'block',
                   },
+                  '@media only screen and (max-width: 400px) ': {
+                    display: 'block',
+                  },
                 }}
                 d="none"
                 color="#3182CE"

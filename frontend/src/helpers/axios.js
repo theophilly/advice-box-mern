@@ -30,10 +30,6 @@ const axiosInstance = axios.create({
     'Content-Type': 'application/json',
     'Accept': '*/*',
   },
-  proxy: {
-    host: '127.0.0.1',
-    port: 5000,
-  },
 });
 
 axiosInstance.interceptors.request.use(async (req) => {

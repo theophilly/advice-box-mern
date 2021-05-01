@@ -65,19 +65,21 @@ export default function Home() {
                     .fill('')
                     .map(() => <Card></Card>)}
             </Flex>
-            <Box mt="20px" onClick={executeScroll}>
-              <NewPagination
-                total={
-                  posts[0]
-                    ? Math.ceil(
-                        Object.keys(posts.map((item) => item)).length / 9
-                      )
-                    : 0
-                }
-                current={currentA}
-                onPageChange={setCurrentA}
-              ></NewPagination>
-            </Box>
+            {Object.keys(posts.map((item) => item)).length > 9 && (
+              <Box mt="20px" onClick={executeScroll}>
+                <NewPagination
+                  total={
+                    posts[0]
+                      ? Math.ceil(
+                          Object.keys(posts.map((item) => item)).length / 9
+                        )
+                      : 0
+                  }
+                  current={currentA}
+                  onPageChange={setCurrentA}
+                ></NewPagination>
+              </Box>
+            )}
           </TabPanel>
           <TabPanel>
             <Flex justifyContent="center" wrap="wrap">
@@ -91,23 +93,27 @@ export default function Home() {
                     .fill('')
                     .map(() => <Card></Card>)}
             </Flex>
-            <Box mt="20px" onClick={executeScroll}>
-              <NewPagination
-                total={
-                  posts[0]
-                    ? Math.ceil(
-                        Object.keys(
-                          posts.filter(
-                            (item) => item.category === 'Programming'
-                          )
-                        ).length / 9
-                      )
-                    : 0
-                }
-                current={currentP}
-                onPageChange={setCurrentP}
-              ></NewPagination>
-            </Box>
+            {Object.keys(
+              posts.filter((item) => item.category === 'Programming')
+            ).length > 9 && (
+              <Box mt="20px" onClick={executeScroll}>
+                <NewPagination
+                  total={
+                    posts[0]
+                      ? Math.ceil(
+                          Object.keys(
+                            posts.filter(
+                              (item) => item.category === 'Programming'
+                            )
+                          ).length / 9
+                        )
+                      : 0
+                  }
+                  current={currentP}
+                  onPageChange={setCurrentP}
+                ></NewPagination>
+              </Box>
+            )}
           </TabPanel>
           <TabPanel>
             <Flex justifyContent="center" wrap="wrap">
@@ -121,21 +127,26 @@ export default function Home() {
                     .fill('')
                     .map(() => <Card></Card>)}
             </Flex>
-            <Box mt="20px" onClick={executeScroll}>
-              <NewPagination
-                total={
-                  posts[0]
-                    ? Math.ceil(
-                        Object.keys(
-                          posts.filter((item) => item.category === 'Education')
-                        ).length / 9
-                      )
-                    : 0
-                }
-                current={currentE}
-                onPageChange={setCurrentE}
-              ></NewPagination>
-            </Box>
+            {Object.keys(posts.filter((item) => item.category === 'Education'))
+              .length > 9 && (
+              <Box mt="20px" onClick={executeScroll}>
+                <NewPagination
+                  total={
+                    posts[0]
+                      ? Math.ceil(
+                          Object.keys(
+                            posts.filter(
+                              (item) => item.category === 'Education'
+                            )
+                          ).length / 9
+                        )
+                      : 0
+                  }
+                  current={currentE}
+                  onPageChange={setCurrentE}
+                ></NewPagination>
+              </Box>
+            )}
           </TabPanel>
           <TabPanel>
             <Flex justifyContent="center" wrap="wrap">
@@ -149,21 +160,24 @@ export default function Home() {
                     .fill('')
                     .map(() => <Card></Card>)}
             </Flex>
-            <Box mt="20px" onClick={executeScroll}>
-              <NewPagination
-                total={
-                  posts[0]
-                    ? Math.ceil(
-                        Object.keys(
-                          posts.filter((item) => item.category === 'Finance')
-                        ).length / 9
-                      )
-                    : 0
-                }
-                current={currentF}
-                onPageChange={setCurrentF}
-              ></NewPagination>
-            </Box>
+            {Object.keys(posts.filter((item) => item.category === 'Finance'))
+              .length > 9 && (
+              <Box mt="20px" onClick={executeScroll}>
+                <NewPagination
+                  total={
+                    posts[0]
+                      ? Math.ceil(
+                          Object.keys(
+                            posts.filter((item) => item.category === 'Finance')
+                          ).length / 9
+                        )
+                      : 0
+                  }
+                  current={currentF}
+                  onPageChange={setCurrentF}
+                ></NewPagination>
+              </Box>
+            )}
           </TabPanel>
           <TabPanel>
             <Flex justifyContent="center" wrap="wrap">
@@ -177,23 +191,27 @@ export default function Home() {
                     .fill('')
                     .map(() => <Card></Card>)}
             </Flex>
-            <Box mt="20px" onClick={executeScroll}>
-              <NewPagination
-                total={
-                  posts[0]
-                    ? Math.ceil(
-                        Object.keys(
-                          posts.filter(
-                            (item) => item.category === 'Relationships'
-                          )
-                        ).length / 9
-                      )
-                    : 0
-                }
-                current={currentR}
-                onPageChange={setCurrentR}
-              ></NewPagination>
-            </Box>
+            {Object.keys(
+              posts.filter((item) => item.category === 'Relationships')
+            ).length > 9 && (
+              <Box mt="20px" onClick={executeScroll}>
+                <NewPagination
+                  total={
+                    posts[0]
+                      ? Math.ceil(
+                          Object.keys(
+                            posts.filter(
+                              (item) => item.category === 'Relationships'
+                            )
+                          ).length / 9
+                        )
+                      : 0
+                  }
+                  current={currentR}
+                  onPageChange={setCurrentR}
+                ></NewPagination>
+              </Box>
+            )}
           </TabPanel>
           <TabPanel>
             <Flex justifyContent="center" wrap="wrap">
@@ -207,21 +225,24 @@ export default function Home() {
                     .fill('')
                     .map(() => <Card></Card>)}
             </Flex>
-            <Box mt="20px" onClick={executeScroll}>
-              <NewPagination
-                total={
-                  posts[0]
-                    ? Math.ceil(
-                        Object.keys(
-                          posts.filter((item) => item.category === 'Life')
-                        ).length / 9
-                      )
-                    : 0
-                }
-                current={currentL}
-                onPageChange={setCurrentL}
-              ></NewPagination>
-            </Box>
+            {Object.keys(posts.filter((item) => item.category === 'Life'))
+              .length > 9 && (
+              <Box mt="20px" onClick={executeScroll}>
+                <NewPagination
+                  total={
+                    posts[0]
+                      ? Math.ceil(
+                          Object.keys(
+                            posts.filter((item) => item.category === 'Life')
+                          ).length / 9
+                        )
+                      : 0
+                  }
+                  current={currentL}
+                  onPageChange={setCurrentL}
+                ></NewPagination>
+              </Box>
+            )}
           </TabPanel>
         </TabPanels>
       </Tabs>
