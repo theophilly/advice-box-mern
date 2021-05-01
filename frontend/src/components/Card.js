@@ -71,13 +71,13 @@ export const Card = ({
     profilePicture: null,
   });
   React.useEffect(() => {
-    const getUser = async (userName) => {
-      let fecthedUser = await axios.get(
-        `http://127.0.0.1:5000/api/user/getuser/${userName}`
-      );
-      return fecthedUser;
-    };
-    getUser(userName).then(({ data: { user } }) => setProfile({ ...user }));
+    if (userName) {
+      const getUser = async (userName) => {
+        let fecthedUser = await axios.get(`/api/user/getuser/${userName}`);
+        return fecthedUser;
+      };
+      getUser(userName).then(({ data: { user } }) => setProfile({ ...user }));
+    }
   }, []);
 
   const initialRef = React.useRef();

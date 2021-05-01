@@ -56,32 +56,34 @@ export default function Dashboard() {
   });
 
   useEffect(() => {
-    const checkNetwork = getNetworkStatus();
+    if (userName) {
+      const checkNetwork = getNetworkStatus();
 
-    checkNetwork
-      .then((res) => {
-        const getUser = async (userUsername) => {
-          let fecthedUser = await axios.get(
-            `http://127.0.0.1:5000/api/user/getuser/${userUsername}`
-          );
-          return fecthedUser;
-        };
-        getUser(userName)
-          .then(({ data: { user } }) =>
-            setProfile({ ...user, loading: false, internetConection: true })
-          )
-          .catch((error) =>
-            setProfile({ ...profile, loading: false, error: true })
-          );
-      })
-      .catch((err) => {
-        setProfile({
-          ...profile,
-          loading: false,
-          error: true,
-          internetConection: false,
+      checkNetwork
+        .then((res) => {
+          const getUser = async (userUsername) => {
+            let fecthedUser = await axios.get(
+              `/api/user/getuser/${userUsername}`
+            );
+            return fecthedUser;
+          };
+          getUser(userName)
+            .then(({ data: { user } }) =>
+              setProfile({ ...user, loading: false, internetConection: true })
+            )
+            .catch((error) =>
+              setProfile({ ...profile, loading: false, error: true })
+            );
+        })
+        .catch((err) => {
+          setProfile({
+            ...profile,
+            loading: false,
+            error: true,
+            internetConection: false,
+          });
         });
-      });
+    }
   }, [userName, reloadProfile]);
 
   const getNetworkStatus = async () => {

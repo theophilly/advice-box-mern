@@ -30,11 +30,11 @@ export default function Header() {
         </div>
       </NavLink>
       <div className="links">
-        <label onClick={setActiveToggle} className="menu" for="menu">
-          <div id="toggle" class={`menu-toggle ${active}`}>
-            <span class="menu-icon"></span>
-            <span class="menu-icon"></span>
-            <span class="menu-icon"></span>
+        <label onClick={setActiveToggle} className="menu" htmlFor="menu">
+          <div id="toggle" className={`menu-toggle ${active}`}>
+            <span className="menu-icon"></span>
+            <span className="menu-icon"></span>
+            <span className="menu-icon"></span>
           </div>
         </label>
         <input type="checkbox" id="menu"></input>
@@ -43,18 +43,18 @@ export default function Header() {
           <div className="multilevel">
             <div className="item">
               <input type="checkbox" id="A"></input>
-              <label for="A">
+              <label htmlFor="A">
                 <NavLink to="/about">
-                  <i class="far fa-address-card"></i>
+                  <i className="far fa-address-card"></i>
                   about
                 </NavLink>
               </label>
             </div>
             <div className="item">
-              <label for="B">
-                <i class="fas fa-user" />
+              <label htmlFor="B">
+                <i className="fas fa-user" />
                 {state.authenticated && state.user.userName}
-                <i class="fas fa-caret-down"></i>
+                <i className="fas fa-caret-down"></i>
               </label>
               <input type="checkbox" id="B"></input>
               <ul>
@@ -67,7 +67,7 @@ export default function Header() {
                         : `#`
                     }
                   >
-                    <i class="fas fa-laptop-house"></i>
+                    <i className="fas fa-laptop-house"></i>
                     Dashboard
                   </NavLink>
                 </li>
@@ -77,7 +77,10 @@ export default function Header() {
                     className="navlink"
                     to="#"
                   >
-                    <i style={{ color: 'red' }} class="fas fa-power-off"></i>
+                    <i
+                      style={{ color: 'red' }}
+                      className="fas fa-power-off"
+                    ></i>
                     Sign Out
                   </NavLink>
                 </li>
@@ -88,20 +91,20 @@ export default function Header() {
           <div className="multilevel">
             <div className="item">
               <input type="checkbox" id="A"></input>
-              <label for="A">
+              <label htmlFor="A">
                 <SignIn />
               </label>
             </div>
             <div className="item">
               <input type="checkbox" id="B"></input>
-              <label for="B">
+              <label htmlFor="B">
                 <SignUp />
               </label>
             </div>
             <div className="item">
               <input type="checkbox" id="C"></input>
-              <label for="C">
-                <i class="far fa-address-card"></i>
+              <label htmlFor="C">
+                <i className="far fa-address-card"></i>
                 <NavLink to="/about">about</NavLink>
               </label>
             </div>
