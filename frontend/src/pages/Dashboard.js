@@ -84,7 +84,7 @@ export default function Dashboard() {
           });
         });
     }
-  }, [userName, reloadProfile, profile]);
+  }, [userName, reloadProfile]);
 
   const getNetworkStatus = async () => {
     let result = fetch(
@@ -219,7 +219,7 @@ export default function Dashboard() {
                             value && SUPPORTED_FORMATS.includes(value.type)
                         ),
                       about: Yup.string()
-                        .max(15, 'Must be 15 characters or less')
+                        .max(1000, 'Must be 1000 characters or less')
                         .required('about is required'),
                     })}
                     onSubmit={async (values, actions) => {
